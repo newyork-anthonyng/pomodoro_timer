@@ -1,0 +1,21 @@
+{
+  "name": "pomodoro_timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "morgan": "^1.7.0",
+    "request": "^2.69.0"
+  }
+}
