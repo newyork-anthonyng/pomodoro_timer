@@ -5,24 +5,37 @@
   <meta charset="UTF-8">
   <meta name="keywords" content="pomodoro timer">
   <meta name="description" content="pomodoro timer">
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <link href="./style.css" type="text/css" rel="stylesheet" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 </head>
 
 <body>
   <h1>Pomodoro Timer</h1>
-  <span class="icon-play3"></span>
-  <span class="icon-pause2"></span>
-  <span class="icon-loop2"></span>
 
   <div class="timer"></div>
 
-  <div class="play-pause"></div>
-  <div class="reset"></div>
+  <div class="big-container">
+    <div class="play-pause">
+      <span class="icon-play3"></span>
+    </div>
 
-  <div class="button">Work</div>
-  <div class="button">Break</div>
+    <div class="reset">
+      <span class="icon-loop2"></span>
+    </div>
+   </div> 
 
-<script src="./app.js"></script>
+  <div class="clear"></div>
+
+  <div class="container">
+    <div id="work" class="button">
+      <p>Work</p>
+    </div>
+    <div id="break" class="button">
+      <p>Break</p>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
 </body>
 </html>
