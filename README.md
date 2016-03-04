@@ -1,4 +1,4 @@
-Pomodoro Timer
+# Pomodoro Timer
 
 A simple pomodoro timer. After the time has elapsed, desktop notifications will appear
 and show images from the Giphy API.
