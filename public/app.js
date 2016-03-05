@@ -1,6 +1,13 @@
 'use strict';
 
+let allNotifications = [];
+
 $(function() {
+  // *** Request necessary permissions *****************************************
+  if(Notification && Notification.permission !== 'granted') {
+    Notification.requestPermission();
+  }
+
   // *** click events **********************************************************
   $('.play-pause').click(function() {
     var play_pause = timer.playPressed();
@@ -22,13 +29,19 @@ $(function() {
     updateButton('play');
   });
 
+  // *** call back for Web Worker **********************************************
+  // This is called back every time the Web Work sends a message
   timer.initTimer(function(data) {
     let action = data['action'];
     let time = data['time'];
 
     updateDisplay(time);
 
+    // as soon as timer is finished, play the notifications and update the play button
     if(action === 'finish') {
+      console.log('Timer is finished');
+      console.log('*****************');
+      timer.timerFinished();
       updateButton('play');
       setUpNotifications();
     }
@@ -51,6 +64,12 @@ function formatTime(timeInSeconds) {
 }
 
 function updateButton(display) {
+  console.log('display: ' + display);
+  if(!display) {
+    console.log('exiting updateButton');
+    return;
+  }
+
   let $play_pause = $('.play-pause');
   $play_pause.empty();
 
@@ -58,24 +77,26 @@ function updateButton(display) {
 
   if(display === 'play') {
     myHtml = '<span class="icon-play3"></span>';
-  } else {
+  } else if(display === 'pause'){
     myHtml = '<span class="icon-pause2"></span>';
   }
 
   $play_pause.append(myHtml);
 }
 
-/// *** timer module ***********************************************************
+// *** timer module ************************************************************
 var timer = (function() {
   let webworker;
 
   const time = {
     work: 25 * 60,
-    break: 5 * 60
+    // break: 5 * 60
+    break: 10
   };
 
   let currentMode = 'work';  // 'work', 'break'
   let playing = false;
+  let finished = false;
 
   let obj = {};
 
@@ -90,6 +111,15 @@ var timer = (function() {
   };
 
   obj.playPressed = function() {
+    // if timer has finished and play button is pressed,
+    // restart the timer and play it
+    if(finished) {
+      finished = false;
+      obj.resetTimer();
+      obj.playTimer();
+      return 'pause';
+    }
+
     if(playing) {
       obj.pauseTimer();
       return 'play';
@@ -116,6 +146,7 @@ var timer = (function() {
     }
     webworker.postMessage(data);
     playing = false;
+    finished = false;
   };
 
   obj.setTimer = function(mode) {
@@ -128,8 +159,21 @@ var timer = (function() {
 
     webworker.postMessage(data);
     playing = false;
-
+    finished = false;
   };
+
+  obj.timerFinished = function() {
+    playing = false;
+    finished = true;
+  };
+
+  obj.test = function() {
+    return {
+      finished: finished,
+      playing: playing
+    }
+  }
+
   return obj;
 }());
 
@@ -149,21 +193,24 @@ function setUpNotifications() {
 
 function notifyMe(url) {
   if(!Notification) {
-    console.log('Desktop notifications not available');
     return;
   }
 
   if(Notification.permission !== 'granted') {
-    console.log('Requesting permission');
     Notification.requestPermission();
   } else {
-    console.log('New notification');
     var notification = new Notification('Timer Finished', {
       icon: url,
       body: 'Take a break!'
     });
 
+    allNotifications.push(notification);
+
     notification.onclick = function() {
+      for(let i = 0; i < allNotifications.length; i++) {
+        allNotifications[i].close();
+      }
+
       window.open(url);
     }
   }
