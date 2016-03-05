@@ -96,8 +96,7 @@ var timer = (function() {
 
   const time = {
     work: 25 * 60,
-    // break: 5 * 60
-    break: 10
+    break: 5 * 60
   };
 
   let currentMode = 'work';  // 'work', 'break'
