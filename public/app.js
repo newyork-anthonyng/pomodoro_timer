@@ -39,11 +39,17 @@ $(function() {
 
     // as soon as timer is finished, play the notifications and update the play button
     if(action === 'finish') {
-      console.log('Timer is finished');
-      console.log('*****************');
       timer.timerFinished();
       updateButton('play');
       setUpNotifications();
+
+      // play audio
+      const audio = new Audio('./assets/beep.wav');
+      for(var i = 0; i < 3; i++) {
+        setTimeout(function() {
+          audio.play();
+        }, i * 500);
+      }
     }
   });
 });
@@ -210,7 +216,6 @@ function notifyMe(url) {
       for(let i = 0; i < allNotifications.length; i++) {
         allNotifications[i].close();
       }
-
       window.open(url);
     }
   }
