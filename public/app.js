@@ -1,6 +1,13 @@
 'use strict';
 
 let allNotifications = [];
+const myColors = [
+  '#8ADCB3', '#86E3E9', '#8CF3DD', '#8CF3A3', '#8EE986', '#C394DC', '#E991CA',
+  '#EC97F3', '#BA97F3', '#9A91E9', '#DC9F88', '#E9BD85', '#F3B68B', '#F3988B',
+  '#E9858B', '#DCD988', '#AEE984', '#DAF38A', '#F3E58A', '#E9D184', '#12E1FF',
+  '#10E8C9', '#1EFF9F', '#10E84E', '#12FF13', '#FF314D', '#E82DA4', '#F13EFF',
+  '#A72DE8', '#7F31FF', '#FFD032', '#FFAB3F', '#E8602E', '#FF3243', '#E8040D'
+];
 
 $(function() {
   // *** Request necessary permissions *****************************************
@@ -43,16 +50,30 @@ $(function() {
       updateButton('play');
       setUpNotifications();
 
-      // play audio
-      const audio = new Audio('./assets/beep.wav');
-      for(var i = 0; i < 3; i++) {
-        setTimeout(function() {
-          audio.play();
-        }, i * 500);
-      }
+      playAudio();
+      changeBackgroundColor();
     }
   });
 });
+
+function changeBackgroundColor() {
+  // choose a random color
+  const max = myColors.length;
+  const randomNumber = Math.floor(Math.random() * max);
+
+  // change the background color
+  $('body').css('background-color', myColors[randomNumber]);
+}
+
+function playAudio() {
+  const audio = new Audio('./assets/beep.wav');
+
+  for(let i = 0; i < 3; i++) {
+    setTimeout(function() {
+      audio.play();
+    }, i * 750);
+  }
+}
 
 function updateDisplay(time) {
   const myTime = formatTime(time);
@@ -70,9 +91,7 @@ function formatTime(timeInSeconds) {
 }
 
 function updateButton(display) {
-  console.log('display: ' + display);
   if(!display) {
-    console.log('exiting updateButton');
     return;
   }
 
