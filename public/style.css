@@ -68,7 +68,7 @@ h1 {
 
 .container {
   width: 27em;
-  margin: auto;
+  margin: 1em auto 1em auto;
   text-align: center; }
 
 /*** Play, Pause and Reset Buttons **************************************************/

@@ -203,8 +203,11 @@ var timer = (function() {
 
 // *** Notifications ***********************************************************
 function setUpNotifications() {
+
   // grab giphy
-  const myUrl = '/giphy';
+  const giphyKeyword = $('#giphy-search').val() || 'random';
+  const myUrl = '/giphy?keyword=' + giphyKeyword;
+
   $.ajax({
     url: myUrl,
     method: 'GET'
