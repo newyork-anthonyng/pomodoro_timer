@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const logger = require('morgan');
 const request = require('request');
+const Utility = require('./public/utility');
 
 app.use(express.static('public'));
 app.use(logger('dev'));
@@ -13,7 +14,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/giphy', (req, res) => {
-  var myUrl = 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=computer';
+  const queryString = Utility.parseQueryString(req.originalUrl);
+  const myUrl = 'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&' +
+                'tag=' + queryString['keyword'];
 
   request(myUrl, (error, response, body) => {
     if(!error && response.statusCode === 200) {

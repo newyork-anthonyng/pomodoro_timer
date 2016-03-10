@@ -11,7 +11,7 @@ describe('Giphy API', () => {
 
   it('should get a giphy on GET /giphy', (done) => {
     chai.request(server)
-      .get('/giphy')
+      .get('/giphy?keyword=computer')
       .end((err, res) => {
         res.should.have.a.status(200);
         res.should.be.json;
