@@ -101,9 +101,9 @@ function updateButton(display) {
   let myHtml;
 
   if(display === 'play') {
-    myHtml = '<span class="icon-play3"></span>';
+    myHtml = '<img src="./assets/playButton.png" alt="Play Button" />';
   } else if(display === 'pause'){
-    myHtml = '<span class="icon-pause2"></span>';
+    myHtml = '<img src="./assets/pauseButton.png" alt="Pause Button" />';
   }
 
   $play_pause.append(myHtml);
