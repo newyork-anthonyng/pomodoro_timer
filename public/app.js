@@ -241,3 +241,41 @@ function notifyMe(url) {
     }
   }
 }
+
+
+// *** Modal ******************************************************************
+$(function() {
+  const $modal = $('.modal');
+  const $button = $('#openModal');
+  const $close = $('.close');
+  const $giphySearch = $('#giphy-search');
+
+  // open modal
+  $button.click(function() {
+    $modal.css('display', 'block');
+    $giphySearch.focus();
+  });
+
+  // close modal
+  $close.click(function() {
+    hideModal();
+  });
+
+  $giphySearch.keyup(function(e) {
+    const enterKeyPressed = e.which  === 13;
+    const escapeKeyPressed = e.which === 27;
+
+    if(enterKeyPressed || escapeKeyPressed) hideModal();
+  });
+
+  $(window).click(function(e) {
+    // user clicks on background of modal
+    if(e.target == $modal[0]) {
+      hideModal();
+    }
+  });
+
+  function hideModal() {
+    $modal.css('display', 'none');
+  }
+});
