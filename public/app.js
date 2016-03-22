@@ -19,34 +19,87 @@ const HOVER_RESET_BUTTON = './assets/images/hover_resetButton.png';
 const HOVER_SETTINGS_BUTTON = './assets/images/hover_settingsButton.png';
 
 $(function() {
-  // *** Request necessary permissions *****************************************
+  requestNotificationPermission();
+  setUpClickEvents();
+  setUpHoverEvents();
+  initializeTimer();
+});
+
+function requestNotificationPermission() {
   if(Notification && Notification.permission !== 'granted') {
     Notification.requestPermission();
   }
+}
 
-  // *** click events **********************************************************
+function setUpClickEvents() {
+  setPlayButtonClickEvent();
+  setResetButtonClickEvent();
+  setWorkButtonClickEvent();
+  setBreakButtonClickEvent();
+}
+
+function setPlayButtonClickEvent() {
   $('.play-pause').click(function() {
     var play_pause = timer.playPressed();
     updateButton(play_pause);
   });
+}
 
+function setResetButtonClickEvent() {
   $('.reset').click(function() {
     timer.resetTimer();
     updateButton('play');
   });
+}
 
+function setWorkButtonClickEvent() {
   $('#work').click(function() {
     timer.setTimer('work');
     updateButton('play');
   });
+}
 
+function setBreakButtonClickEvent() {
   $('#break').click(function() {
     timer.setTimer('break');
     updateButton('play');
   });
+}
 
-  // *** call back for Web Worker **********************************************
-  // This is called back every time the Web Work sends a message
+function setUpHoverEvents() {
+  setPlayButtonHoverEvent();
+  setResetButtonHoverEvent();
+}
+
+function setPlayButtonHoverEvent() {
+  $('.play-pause img').hover(function() {
+    const currentImage = $(this).attr('src');
+    if(currentImage === PLAY_BUTTON) {
+      $(this).attr('src', HOVER_PLAY_BUTTON);
+    } else {
+      $(this).attr('src', HOVER_PAUSE_BUTTON);
+    }
+  }, function() {
+    const currentImage = $(this).attr('src');
+
+    if(currentImage === HOVER_PLAY_BUTTON) {
+      $(this).attr('src', PLAY_BUTTON);
+    } else {
+      $(this).attr('src', PAUSE_BUTTON);
+    }
+  });
+}
+
+function setResetButtonHoverEvent() {
+  $('.reset img').hover(function() {
+    $(this).attr('src', HOVER_RESET_BUTTON);
+  }, function() {
+    $(this).attr('src', RESET_BUTTON);
+  });
+}
+
+function initializeTimer() {
+  // This is called back every time the Web Worker sends a message
   timer.initTimer(function(data) {
     let action = data['action'];
     let time = data['time'];
@@ -63,7 +116,7 @@ $(function() {
       changeBackgroundColor();
     }
   });
-});
+}
 
 function changeBackgroundColor() {
   // choose a random color
@@ -100,22 +153,17 @@ function formatTime(timeInSeconds) {
 }
 
 function updateButton(display) {
-  if(!display) {
-    return;
-  }
+  if(!display) return;
 
-  let $play_pause = $('.play-pause');
-  $play_pause.empty();
-
-  let myHtml;
+  let $play_pause = $('.play-pause img');
 
   if(display === 'play') {
-    myHtml = '<img src="' + PLAY_BUTTON + '" alt="Play Button" />';
+    $play_pause.attr('src', PLAY_BUTTON);
+    $play_pause.attr('alt', 'Play Button');
   } else if(display === 'pause'){
-    myHtml = '<img src="' + PAUSE_BUTTON + '" alt="Pause Button" />';
+    $play_pause.attr('src', PAUSE_BUTTON);
+    $play_pause.attr('alt', 'Pause Button');
   }
-
-  $play_pause.append(myHtml);
 }
 
 // *** timer module ************************************************************
@@ -251,7 +299,6 @@ function notifyMe(url) {
   }
 }
 
-
 // *** Modal ******************************************************************
 $(function() {
   const $modal = $('.modal');
@@ -289,31 +336,4 @@ $(function() {
   function hideModal() {
     $modal.fadeOut(400);
   }
-});
-
-// *** Hover Effects ******************************************************************
-$(function() {
-  $('.play-pause img').hover(function() {
-    const currentImage = $(this).attr('src');
-    
-    if(currentImage === PLAY_BUTTON) {
-      $(this).attr('src', HOVER_PLAY_BUTTON);
-    } else {
-      $(this).attr('src', HOVER_PAUSE_BUTTON);
-    }
-  }, function() {
-    const currentImage = $(this).attr('src');
-
-    if(currentImage === HOVER_PLAY_BUTTON) {
-      $(this).attr('src', PLAY_BUTTON);
-    } else {
-      $(this).attr('src', PAUSE_BUTTON);
-    }
-  });
-
-  $('.reset img').hover(function() {
-    $(this).attr('src', HOVER_RESET_BUTTON);
-  }, function() {
-    $(this).attr('src', RESET_BUTTON);
-  });
 });

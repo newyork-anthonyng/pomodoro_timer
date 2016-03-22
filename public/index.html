@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="keywords" content="pomodoro timer">
   <meta name="description" content="pomodoro timer">
+  <meta name="author" content="Anthony Ng">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <link href="./style.css" type="text/css" rel="stylesheet" />
@@ -45,25 +46,25 @@
 
   <div class="clear"></div>
 
-  <!-- Popup Modal -->
+  <!-- Popup Modal Button -->
   <div id="openModal" class="button">
     <p>Settings</p>
   </div>
 
+  <!-- Popup Modal -->
   <div class="modal">
-    <!-- Giphy Search Input -->
     <div class="modal-content">
       <span class="close">x</span>
 
       <div class="container">
+        <!-- Giphy Search Input -->
         <label for="Giphy">Enter Giphy Search Term</label>
         <input id="giphy-search" type="text" name="Giphy" />
-
         <br />
 
+        <!-- Custom Time Intervals -->
         <label for="Work">Enter Work Time Interval</label>
         <input id="work-time-interval" type="number" name="Work" />
-
         <br />
 
         <label for="Break">Enter Break Time Interval</label>
@@ -80,6 +81,7 @@
     <img src="./assets/images/hover_resetButton.png" />
     <img src="./assets/images/hover_settingsButton.png" />
   </div>
+
   <script src="./app.js"></script>
 </body>
 </html>
