@@ -9,6 +9,15 @@ const myColors = [
   '#A72DE8', '#7F31FF', '#FFD032', '#FFAB3F', '#E8602E', '#FF3243', '#E8040D'
 ];
 
+const PLAY_BUTTON = './assets/images/playButton.png';
+const PAUSE_BUTTON = './assets/images/pauseButton.png';
+const RESET_BUTTON = './assets/images/resetButton.png';
+const SETTINGS_BUTTON = './assets/images/settingsButton.png';
+const HOVER_PLAY_BUTTON = './assets/images/hover_playButton.png';
+const HOVER_PAUSE_BUTTON = './assets/images/hover_pauseButton.png';
+const HOVER_RESET_BUTTON = './assets/images/hover_resetButton.png';
+const HOVER_SETTINGS_BUTTON = './assets/images/hover_settingsButton.png';
+
 $(function() {
   // *** Request necessary permissions *****************************************
   if(Notification && Notification.permission !== 'granted') {
@@ -101,9 +110,9 @@ function updateButton(display) {
   let myHtml;
 
   if(display === 'play') {
-    myHtml = '<img src="./assets/playButton.png" alt="Play Button" />';
+    myHtml = '<img src="' + PLAY_BUTTON + '" alt="Play Button" />';
   } else if(display === 'pause'){
-    myHtml = '<img src="./assets/pauseButton.png" alt="Pause Button" />';
+    myHtml = '<img src="' + PAUSE_BUTTON + '" alt="Pause Button" />';
   }
 
   $play_pause.append(myHtml);
@@ -278,4 +287,31 @@ $(function() {
   function hideModal() {
     $modal.css('display', 'none');
   }
+});
+
+// *** Hover Effects ******************************************************************
+$(function() {
+  $('.play-pause img').hover(function() {
+    const currentImage = $(this).attr('src');
+    
+    if(currentImage === PLAY_BUTTON) {
+      $(this).attr('src', HOVER_PLAY_BUTTON);
+    } else {
+      $(this).attr('src', HOVER_PAUSE_BUTTON);
+    }
+  }, function() {
+    const currentImage = $(this).attr('src');
+
+    if(currentImage === HOVER_PLAY_BUTTON) {
+      $(this).attr('src', PLAY_BUTTON);
+    } else {
+      $(this).attr('src', PAUSE_BUTTON);
+    }
+  });
+
+  $('.reset img').hover(function() {
+    $(this).attr('src', HOVER_RESET_BUTTON);
+  }, function() {
+    $(this).attr('src', RESET_BUTTON);
+  });
 });
