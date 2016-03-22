@@ -258,6 +258,8 @@ $(function() {
   const $button = $('#openModal');
   const $close = $('.close');
   const $giphySearch = $('#giphy-search');
+  const $workTime = $('#work-time-interval');
+  const $breakTime = $('#break-time-interval');
 
   // open modal
   $button.click(function() {
