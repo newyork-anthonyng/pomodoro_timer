@@ -261,7 +261,7 @@ $(function() {
 
   // open modal
   $button.click(function() {
-    $modal.css('display', 'block');
+    $modal.fadeIn(400);
     $giphySearch.focus();
   });
 
@@ -285,7 +285,7 @@ $(function() {
   });
 
   function hideModal() {
-    $modal.css('display', 'none');
+    $modal.fadeOut(400);
   }
 });
 
