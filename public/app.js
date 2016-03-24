@@ -15,6 +15,7 @@ $(function() {
   setUpHoverEvents();
   initializeTimer();
   setUpModalEvents();
+  setUpKeyboardShortcuts();
 });
 
 function requestNotificationPermission() {
@@ -377,3 +378,53 @@ function closeAllNotifications() {
     allNotifications[i].close();
   }
 }
+
+function setUpKeyboardShortcuts() {
+  $(window).keypress(function(e) {
+    setUpPlayShortcut(e.keyCode);
+    setUpResetShortcut(e.keyCode);
+    setUpWorkShortcut(e.keyCode);
+    setUpBreakShortcut(e.keyCode);
+    setUpSettingsShortcut(e.keyCode);
+  });
+}
+
+function setUpPlayShortcut(keyCode) {
+  const spacebarPressed = keyCode === 32;
+
+  if(spacebarPressed) {
+    $('.play-pause').click();
+  }
+}
+
+function setUpResetShortcut(keyCode) {
+  const resetKeyPressed = keyCode === 82 || keyCode === 114;
+
+  if(resetKeyPressed) {
+    $('.reset').click();
+  }
+}
+
+function setUpWorkShortcut(keyCode) {
+  const workKeyPressed = keyCode === 87 || keyCode === 119;
+
+  if(workKeyPressed) {
+    $('#work').click();
+  }
+}
+
+function setUpBreakShortcut(keyCode) {
+  const breakKeyPressed = keyCode === 66 || keyCode === 98;
+
+  if(breakKeyPressed) {
+    $('#break').click();
+  }
+}
+
+function setUpSettingsShortcut(keyCode) {
+  const settingsKeyPressed = keyCode === 83 || keyCode === 115;
+
+  if(settingsKeyPressed) {
+    $('#openModal').click();
+  }
+};
