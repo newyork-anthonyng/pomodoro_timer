@@ -3,7 +3,7 @@
 A simple pomodoro timer. After the time has elapsed, desktop notifications will appear
 and show images from the Giphy API.
 
-Keyboard Shortcuts
+### Keyboard Shortcuts
 
 Key | Action
 --- | ---
@@ -19,4 +19,4 @@ s | Open up Settings popup
 HTML/CSS, Express, Node, Notifications, Web Workers, Giphy API
 
 ### Wireframes
-![Wireframe](./public/assets/Wireframes.png);
+![Wireframe](./public/assets/Wireframes.png)
