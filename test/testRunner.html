@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Runner</title>
+  <link href="../node_modules/mocha/mocha.css" rel="stylesheet" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="mocha"></div>
+
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="./sinon.js"></script>
+  <script>
+    mocha.setup('bdd');
+  </script>
+  <!-- Code to Test -->
+  <script src="../public/web_worker.js"></script>
+
+  <!-- Test Code -->
+  <script src="./web_workerTest.js"></script>
+
+  <script>
+    mocha.run();
+  </script>
+</body>
+</html>
