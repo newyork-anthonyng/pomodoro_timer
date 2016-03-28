@@ -1,0 +1,7 @@
+.DS_Store
+.sass-cache/
+node_modules
+public/.DS_Store
+public/.sass-cache
+public/assets/.DS_Store
+public/assets/images/.DS_Store
