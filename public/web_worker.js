@@ -1,35 +1,4 @@
 'use strict';
-let timerId;
-let i = 25 * 60;
-let rang = false;
-
-// timer ticks
-function timedCount() {
-  i--;
-  timerId = setTimeout('timedCount()', 1000);
-
-  let data = {};
-
-  // timer has elapsed
-  if(i <= 0) {
-
-    if(!rang) {
-      data = {
-        action: 'finish',
-        time: 0
-      };
-      rang = true;
-      postMessage(data);
-    }
-  } else {
-    data = {
-      action: 'update',
-      time: i
-    };
-    postMessage(data);
-  }
-
-}
 
 onmessage = function(e) {
   let action = e.data['action'];
@@ -37,60 +6,99 @@ onmessage = function(e) {
 
   switch(action) {
     case 'play':
-      playTimer();
+      timerWebWorker.playTimer();
       break;
     case 'pause':
-      pauseTimer();
+      timerWebWorker.pauseTimer();
       break;
     case 'reset':
-      resetTimer(time);
+      timerWebWorker.resetTimer(time);
       break;
     case 'set':
-      setTimer(time);
+      timerWebWorker.setTimer(time);
       break;
   };
 }
 
-function setTimer(startingTime) {
-  pauseTimer();
-  i = startingTime;
+let timerWebWorker = (function() {
+  const my = {};
+  let timerId;
+  let i = 25 * 60;
+  let rang = false;
 
-  var data = {
-    action: 'set',
-    time: startingTime
-  };
-  postMessage(data);
-  rang = false;
-}
+  // timer ticks
+  my.timedCount = function() {
+    i--;
 
-function playTimer() {
-  timedCount();
+    timerId = setTimeout(function() {
+      my.timedCount();
+    }, 1000);
 
-  var data = {
-    action: 'play',
-    time: i
-  };
-  postMessage(data);
-}
+    let data = {};
 
-function pauseTimer() {
-  clearTimeout(timerId);
+    // timer has elapsed
+    if(i <= 0) {
 
-  var data = {
-    action: 'pause',
-    time: i
-  };
-  postMessage(data);
-}
-
-function resetTimer(startingTime) {
-  pauseTimer();
-  setTimer(startingTime);
-
-  var data = {
-    action: 'reset',
-    time: startingTime
+      if(!rang) {
+        data = {
+          action: 'finish',
+          time: 0
+        };
+        rang = true;
+        postMessage(data);
+      }
+    } else {
+      data = {
+        action: 'update',
+        time: i
+      };
+      postMessage(data);
+    }
   }
-  postMessage(data);
-  rang = false;
-}
+
+  my.setTimer = function(startingTime) {
+    my.pauseTimer();
+    i = startingTime;
+
+    var data = {
+      action: 'set',
+      time: startingTime
+    };
+    postMessage(data);
+    rang = false;
+  }
+
+  my.playTimer = function() {
+    my.timedCount();
+
+    var data = {
+      action: 'play',
+      time: i
+    };
+    postMessage(data);
+  }
+
+  my.pauseTimer = function() {
+    clearTimeout(timerId);
+
+    var data = {
+      action: 'pause',
+      time: i
+    };
+    postMessage(data);
+  }
+
+  my.resetTimer = function(startingTime) {
+    my.pauseTimer();
+    my.setTimer(startingTime);
+
+    var data = {
+      action: 'reset',
+      time: startingTime
+    }
+    postMessage(data);
+    rang = false;
+  }
+
+  return my;
+}());
