@@ -144,22 +144,38 @@ function setUpOpenModalClickEvent() {
 
 function setUpCloseModalClickEvent() {
   $('.close').click(function() {
-    hideModalPopup();
+    closeModalPopup();
   });
 
   $(window).click(function(e) {
     // user clicks on background of modal
-    if(e.target == $('.modal')[0]) hideModalPopup();
+    if(e.target == $('.modal')[0]) closeModalPopup();
   });
+}
+
+function closeModalPopup() {
+  hideModalPopup();
+  updateWorkAndBreakTime();
+  initializeTimer();
+  timer.resetTimer();
+  updateButton('play');
 }
 
 function hideModalPopup() {
   $('.modal').fadeOut(400);
 }
 
+function updateWorkAndBreakTime() {
+  const workTimeInterval = $('#work-time-interval').val() * 60;
+  const breakTimeInterval = $('#break-time-interval').val() * 60;
+
+  timer.setWorkInterval(workTimeInterval);
+  timer.setBreakInterval(breakTimeInterval);
+}
+
 function setUpModalKeyPressEvent() {
   $('#giphy-search').keyup(function(e) {
-    if(isEnterOrEscapeKeyPressed(e)) hideModalPopup();
+    if(isEnterOrEscapeKeyPressed(e)) closeModalPopup();
   });
 }
 
@@ -212,7 +228,7 @@ function updateButton(display) {
 var timer = (function() {
   let webworker;
 
-  const time = {
+  let time = {
     work: 25 * 60,
     break: 5 * 60
   };
@@ -231,6 +247,14 @@ var timer = (function() {
         callback(event.data);
       }
     }
+  };
+
+  obj.setWorkInterval = function(workInterval) {
+    time.work = workInterval;
+  };
+
+  obj.setBreakInterval = function(breakInterval) {
+    time.break = breakInterval;
   };
 
   obj.playPressed = function() {
@@ -308,7 +332,7 @@ var colorFactory = (function() {
     '#10E8C9', '#1EFF9F', '#10E84E', '#12FF13', '#FF314D', '#E82DA4', '#F13EFF',
     '#A72DE8', '#7F31FF', '#FFD032', '#FFAB3F', '#E8602E', '#FF3243', '#E8040D'
   ];
- 
+
   let obj = {};
 
   obj.getRandomColor = function() {
@@ -324,7 +348,7 @@ var colorFactory = (function() {
   };
 
   return obj;
-}()); 
+}());
 
 function setUpNotifications() {
   const myUrl = createGiphyUrl();
@@ -355,7 +379,7 @@ function createNotification(url) {
   if(!Notification) return;
 
   requestNotificationPermission();
-  
+
   var notification = new Notification('Timer Finished', {
     icon: url,
     body: 'Take a break!'
