@@ -398,7 +398,7 @@ function createNotification(url) {
 }
 
 function closeAllNotifications() {
-  for(let i = 0; i < allNotifications.length; i++) {  
+  for(let i = 0; i < allNotifications.length; i++) {
     allNotifications[i].close();
   }
 }
@@ -409,7 +409,11 @@ function setUpKeyboardShortcuts() {
     setUpResetShortcut(e.keyCode);
     setUpWorkShortcut(e.keyCode);
     setUpBreakShortcut(e.keyCode);
-    setUpSettingsShortcut(e.keyCode);
+
+    if(!isModalOpen()) {
+      setUpSettingsShortcut(e.keyCode);
+      e.preventDefault();
+    }
   });
 }
 
@@ -443,6 +447,10 @@ function setUpBreakShortcut(keyCode) {
   if(breakKeyPressed) {
     $('#break').click();
   }
+}
+
+function isModalOpen() {
+  return $('.modal').css('display') !== 'none';
 }
 
 function setUpSettingsShortcut(keyCode) {
