@@ -174,7 +174,7 @@ function updateWorkAndBreakTime() {
 }
 
 function setUpModalKeyPressEvent() {
-  $('#giphy-search').keyup(function(e) {
+  $(document).keyup(function(e) {
     if(isEnterOrEscapeKeyPressed(e)) closeModalPopup();
   });
 }
