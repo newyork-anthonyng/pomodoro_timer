@@ -31,7 +31,6 @@ describe('timerWebWorker', function() {
       testData.action.should.equal('set');
       testData.time.should.equal(15);
     });
-
   });
 
   describe('playTimer()', function() {
@@ -55,14 +54,38 @@ describe('timerWebWorker', function() {
     });
 
     it('should pass "play" message', function() {
-      let testData = postMessageStub.args[0][0];
-      console.log(testData);
-/*
+      let testData = postMessageStub.args[2][0];
+
       testData.action.should.equal('play');
       testData.time.should.equal(16);
-*/
+    });
+  });
+
+  describe('pauseTimer()', function() {
+    let timedCountStub, postMessageStub;
+
+    before(function() {
+      timedCountStub = sinon.stub(timerWebWorker, 'timedCount');
+      postMessageStub = sinon.stub(window, 'postMessage');
+
+      timerWebWorker.pauseTimer();
     });
 
+    after(function() {
+      timerWebWorker.timedCount.restore();
+      window.postMessage.restore();
+    });
+
+    it('should play timedCount', function() {
+      timedCountStub.calledOnce.should.be.false;
+    });
+
+    it('should pass "pause" message', function() {
+      let testData = postMessageStub.args[0][0];
+
+      testData.action.should.equal('pause');
+      testData.time.should.equal(16);
+    });
   });
 
 });
