@@ -405,14 +405,15 @@ function closeAllNotifications() {
 
 function setUpKeyboardShortcuts() {
   $(window).keypress(function(e) {
-    setUpPlayShortcut(e.keyCode);
-    setUpResetShortcut(e.keyCode);
-    setUpWorkShortcut(e.keyCode);
-    setUpBreakShortcut(e.keyCode);
 
     if(!isModalOpen()) {
-      setUpSettingsShortcut(e.keyCode);
       e.preventDefault();
+
+      setUpSettingsShortcut(e.keyCode);
+      setUpPlayShortcut(e.keyCode);
+      setUpResetShortcut(e.keyCode);
+      setUpWorkShortcut(e.keyCode);
+      setUpBreakShortcut(e.keyCode);
     }
   });
 }
