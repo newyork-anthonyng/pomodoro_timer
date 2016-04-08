@@ -137,7 +137,7 @@ function setUpModalClickEvents() {
 
 function setUpOpenModalClickEvent() {
   $('#openModal').click(function() {
-    $('.modal').fadeIn(400);
+    $('.modal.settings').fadeIn(400);
     $('#giphy-search').focus();
   });
 }
@@ -149,7 +149,7 @@ function setUpCloseModalClickEvent() {
 
   $(window).click(function(e) {
     // user clicks on background of modal
-    if(e.target == $('.modal')[0]) closeModalPopup();
+    if(e.target == $('.modal.settings')[0]) closeModalPopup();
   });
 }
 
@@ -162,7 +162,7 @@ function closeModalPopup() {
 }
 
 function hideModalPopup() {
-  $('.modal').fadeOut(400);
+  $('.modal.settings').fadeOut(400);
 }
 
 function updateWorkAndBreakTime() {
@@ -358,7 +358,7 @@ function setUpNotifications() {
     method: 'GET'
   }).done(function(data) {
     displayNotifications(data['URL']);
-    displayGiphyOnDom(data['URL']);
+    displayStatusPage(data['URL']);
   });
 }
 
@@ -374,9 +374,11 @@ function displayNotifications(url) {
   }
 }
 
-function displayGiphyOnDom(url) {
-  var $giphyImage = $('<iframe src=' + url + '/>');
-  $('body').prepend($giphyImage);
+function displayStatusPage(url) {
+  var $giphyImage = $('iframe');
+  $giphyImage.attr('src', url);
+
+  $('.modal.status').fadeIn(400);
 }
 
 var allNotifications = [];
@@ -424,7 +426,7 @@ function setUpKeyboardShortcuts() {
   });
 
   $(window).keyup(function(e) {
-    setUpGiphyCloseShortcut(e.keyCode);
+    setUpStatusModalCloseShortcut(e.keyCode);
   });
 }
 
@@ -461,7 +463,7 @@ function setUpBreakShortcut(keyCode) {
 }
 
 function isModalOpen() {
-  return $('.modal').css('display') !== 'none';
+  return $('.modal.settings').css('display') !== 'none';
 }
 
 function setUpSettingsShortcut(keyCode) {
@@ -472,10 +474,11 @@ function setUpSettingsShortcut(keyCode) {
   }
 };
 
-function setUpGiphyCloseShortcut(keyCode) {
+function setUpStatusModalCloseShortcut(keyCode) {
   const escapeKeyPressed = keyCode === 27;
 
   if(escapeKeyPressed) {
-    $('iframe').remove();
+    $('iframe').attr('src', '');
+    $('.modal.status').fadeOut(400);
   }
 }
