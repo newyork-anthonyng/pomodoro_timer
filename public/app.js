@@ -358,6 +358,7 @@ function setUpNotifications() {
     method: 'GET'
   }).done(function(data) {
     displayNotifications(data['URL']);
+    displayGiphyOnDom(data['URL']);
   });
 }
 
@@ -371,6 +372,11 @@ function displayNotifications(url) {
   for(let i = 0; i < 3; i++) {
     createNotification(url);
   }
+}
+
+function displayGiphyOnDom(url) {
+  var $giphyImage = $('<iframe src=' + url + '/>');
+  $('body').prepend($giphyImage);
 }
 
 var allNotifications = [];
@@ -415,6 +421,10 @@ function setUpKeyboardShortcuts() {
       setUpWorkShortcut(e.keyCode);
       setUpBreakShortcut(e.keyCode);
     }
+  });
+
+  $(window).keyup(function(e) {
+    setUpGiphyCloseShortcut(e.keyCode);
   });
 }
 
@@ -461,3 +471,11 @@ function setUpSettingsShortcut(keyCode) {
     $('#openModal').click();
   }
 };
+
+function setUpGiphyCloseShortcut(keyCode) {
+  const escapeKeyPressed = keyCode === 27;
+
+  if(escapeKeyPressed) {
+    $('iframe').remove();
+  }
+}
