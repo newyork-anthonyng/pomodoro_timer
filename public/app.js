@@ -375,8 +375,13 @@ function displayNotifications(url) {
 }
 
 function displayStatusPage(url) {
+  var updatedUrl = url;
+  if(url.indexOf('https') === -1) {
+    updatedUrl = updatedUrl.replace('http', 'https');
+  }
+
   var $giphyImage = $('iframe');
-  $giphyImage.attr('src', url);
+  $giphyImage.attr('src', updatedUrl);
 
   $('.modal.status').fadeIn(400);
 }
