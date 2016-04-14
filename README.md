@@ -13,7 +13,7 @@ w | Switch to "Work" mode
 b | Switch to "Break" mode
 s | Open up Settings popup
 
-### Hosted on [Heroku](https://quiet-beyond-98352.herokuapp.com/ "Pomodoro Timer")
+### Hosted on [Heroku](https://ng-pomodoro.herokuapp.com "Pomodoro Timer")
 
 ### Tools Used
 HTML/CSS, Express, Node, Notifications, Web Workers, Giphy API
