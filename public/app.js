@@ -468,7 +468,9 @@ function setUpBreakShortcut(keyCode) {
 }
 
 function isModalOpen() {
-  return $('.modal.settings').css('display') !== 'none';
+  let modalOpen = $('.modal.settings').css('display') !== 'none' ||
+                  $('.modal.status').css('display') !== 'none';
+  return modalOpen;
 }
 
 function setUpSettingsShortcut(keyCode) {
