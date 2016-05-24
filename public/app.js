@@ -149,7 +149,9 @@ function setUpCloseModalClickEvent() {
 
   $(window).click(function(e) {
     // user clicks on background of modal
-    if(e.target == $('.modal.settings')[0]) closeModalPopup();
+    var backgroundClicked = e.target == $('.modal.settings')[0] ||
+                            e.target == $('.modal.status')[0];
+    if(backgroundClicked) closeModalPopup();
   });
 }
 
@@ -163,6 +165,7 @@ function closeModalPopup() {
 
 function hideModalPopup() {
   $('.modal.settings').fadeOut(400);
+  $('.modal.status').fadeOut(400);
 }
 
 function updateWorkAndBreakTime() {
