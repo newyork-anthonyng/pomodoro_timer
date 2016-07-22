@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha",
+    "build": "./node_modules/.bin/webpack --watch",
     "start": "node server.js"
   },
   "author": "",
