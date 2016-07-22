@@ -1,23 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+const React = require('react');
+const ReactDOM = require('react-dom');
+const Time = require('./components/Time.jsx');
+const ActionContainer = require('./containers/ActionContainer.jsx');
+const Footer = require('./components/Footer.jsx');
 
 const App = React.createClass({
 	getInitialState: function() {
 		return {
 			isRunning: false,
-			seconds: 1500
+			seconds: 0,
+			mode: 'work',
+			default: {
+				'work': 5,
+				'break': 2
+			}
 		};
 	},
 
 	componentWillMount: function() {
 		this.intervals = [];
+		this.setState({ seconds: this.state.default.work });
 	},
 
 	componentWillUnmount: function() {
 		this.intervals.forEach(clearInterval);
 	},
 
-	handlePlayClicked: function() {
+	handlePlayClick: function() {
 		if(this.state.isRunning) {
 			this.pauseTimer();
 		} else {
@@ -29,76 +38,62 @@ const App = React.createClass({
 
 	playTimer: function() {
 		console.log('%c playing timer', 'background-color: lightgreen;');
-		const timer = window.setInterval(function() {
-			this.setState({ seconds: this.state.seconds - 1 });
-		}.bind(this), 1000);
+		const timer = window.setInterval(this.tick, 1000);
 
 		this.intervals.push(timer);
+	},
+
+	tick: function() {
+		if(this.state.seconds <= 0) {
+			if(this.state.mode === 'work') {
+				this.setState({
+					mode: 'break',
+					seconds: this.state.default.break
+				});
+			} else if(this.state.mode === 'break') {
+				this.setState({
+					mode: 'work',
+					seconds: this.state.default.work
+				});
+				this.pauseTimer();
+			}
+		} else {
+			this.setState({ seconds: this.state.seconds - 1 });
+		}
 	},
 
 	pauseTimer: function() {
 		console.log('%c pausing timer', 'background-color: lightpink;');
 		this.intervals.forEach(clearInterval);
+		this.setState({ isRunning: false });
 	},
 
-	handleResetClicked: function() {
+	handleResetClick: function() {
 		console.log('reset clicked');
+		this.pauseTimer();
+		this.setState({
+			mode: 'work',
+			seconds: this.state.default.work
+		});
 	},
 
-	handleSettingsClicked: function() {
+	handleSettingsClick: function() {
 		console.log('settings clicked');
 	},
 
 	render: function() {
 		return (
 			<div>
+				<p>{this.state.isRunning ? 'Is Running' : 'Not Running'}</p>
 				<Time seconds={this.state.seconds} />
-				<Label handleClick={this.handlePlayClicked}>{this.state.isRunning ? 'Pause' : 'Play'}</Label>
-				<Label handleClick={this.handleResetClicked}>Reset</Label>
-				<Label handleClick={this.handleSettingsClicked}>Settings</Label>
+				<ActionContainer
+					handlePlayClick={this.handlePlayClick}
+					handleResetClick={this.handleResetClick}
+					handleSettingsClick={this.handleSettingsClick}
+					isRunning={this.state.isRunning}
+				/>
 				<Footer>Pomodoro Timer</Footer>
 			</div>
-		);
-	}
-});
-
-const Time = React.createClass({
-	formatTime: function(seconds) {
-		let minutes = parseInt(seconds / 60);
-		minutes = minutes.length < 2 ? '0' + minutes : minutes;
-		seconds = seconds % 60 + '';
-		seconds = seconds.length < 2 ? '0' + seconds : seconds;
-
-		return minutes + ':' + seconds;
-	},
-
-	render: function() {
-		return (
-			<div>
-				<p>{this.formatTime(this.props.seconds)}</p>
-			</div>
-		);
-	}
-});
-
-const Label = React.createClass({
-	render: function() {
-		return (
-			<p
-				onClick={this.props.handleClick}
-			>
-				{this.props.children}
-			</p>
-		);
-	}
-});
-
-const Footer = React.createClass({
-	render: function() {
-		return (
-			<p>
-				Pomodoro Timer
-			</p>
 		);
 	}
 });

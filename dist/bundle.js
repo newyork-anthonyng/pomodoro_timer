@@ -46,35 +46,37 @@
 
 	'use strict';
 
-	var _react = __webpack_require__(1);
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(33);
+	var Time = __webpack_require__(174);
+	var ActionContainer = __webpack_require__(175);
+	var Footer = __webpack_require__(173);
 
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(33);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var App = _react2.default.createClass({
+	var App = React.createClass({
 		displayName: 'App',
 
 		getInitialState: function getInitialState() {
 			return {
 				isRunning: false,
-				seconds: 1500
+				seconds: 0,
+				mode: 'work',
+				default: {
+					'work': 5,
+					'break': 2
+				}
 			};
 		},
 
 		componentWillMount: function componentWillMount() {
 			this.intervals = [];
+			this.setState({ seconds: this.state.default.work });
 		},
 
 		componentWillUnmount: function componentWillUnmount() {
 			this.intervals.forEach(clearInterval);
 		},
 
-		handlePlayClicked: function handlePlayClicked() {
+		handlePlayClick: function handlePlayClick() {
 			if (this.state.isRunning) {
 				this.pauseTimer();
 			} else {
@@ -86,47 +88,66 @@
 
 		playTimer: function playTimer() {
 			console.log('%c playing timer', 'background-color: lightgreen;');
-			var timer = window.setInterval(function () {
-				this.setState({ seconds: this.state.seconds - 1 });
-			}.bind(this), 1000);
+			var timer = window.setInterval(this.tick, 1000);
 
 			this.intervals.push(timer);
+		},
+
+		tick: function tick() {
+			if (this.state.seconds <= 0) {
+				if (this.state.mode === 'work') {
+					this.setState({
+						mode: 'break',
+						seconds: this.state.default.break
+					});
+				} else if (this.state.mode === 'break') {
+					this.setState({
+						mode: 'work',
+						seconds: this.state.default.work
+					});
+					this.pauseTimer();
+				}
+			} else {
+				this.setState({ seconds: this.state.seconds - 1 });
+			}
 		},
 
 		pauseTimer: function pauseTimer() {
 			console.log('%c pausing timer', 'background-color: lightpink;');
 			this.intervals.forEach(clearInterval);
+			this.setState({ isRunning: false });
 		},
 
-		handleResetClicked: function handleResetClicked() {
+		handleResetClick: function handleResetClick() {
 			console.log('reset clicked');
+			this.pauseTimer();
+			this.setState({
+				mode: 'work',
+				seconds: this.state.default.work
+			});
 		},
 
-		handleSettingsClicked: function handleSettingsClicked() {
+		handleSettingsClick: function handleSettingsClick() {
 			console.log('settings clicked');
 		},
 
 		render: function render() {
-			return _react2.default.createElement(
+			return React.createElement(
 				'div',
 				null,
-				_react2.default.createElement(Time, { seconds: this.state.seconds }),
-				_react2.default.createElement(
-					Label,
-					{ handleClick: this.handlePlayClicked },
-					this.state.isRunning ? 'Pause' : 'Play'
+				React.createElement(
+					'p',
+					null,
+					this.state.isRunning ? 'Is Running' : 'Not Running'
 				),
-				_react2.default.createElement(
-					Label,
-					{ handleClick: this.handleResetClicked },
-					'Reset'
-				),
-				_react2.default.createElement(
-					Label,
-					{ handleClick: this.handleSettingsClicked },
-					'Settings'
-				),
-				_react2.default.createElement(
+				React.createElement(Time, { seconds: this.state.seconds }),
+				React.createElement(ActionContainer, {
+					handlePlayClick: this.handlePlayClick,
+					handleResetClick: this.handleResetClick,
+					handleSettingsClick: this.handleSettingsClick,
+					isRunning: this.state.isRunning
+				}),
+				React.createElement(
 					Footer,
 					null,
 					'Pomodoro Timer'
@@ -135,58 +156,7 @@
 		}
 	});
 
-	var Time = _react2.default.createClass({
-		displayName: 'Time',
-
-		formatTime: function formatTime(seconds) {
-			var minutes = parseInt(seconds / 60);
-			minutes = minutes.length < 2 ? '0' + minutes : minutes;
-			seconds = seconds % 60 + '';
-			seconds = seconds.length < 2 ? '0' + seconds : seconds;
-
-			return minutes + ':' + seconds;
-		},
-
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'p',
-					null,
-					this.formatTime(this.props.seconds)
-				)
-			);
-		}
-	});
-
-	var Label = _react2.default.createClass({
-		displayName: 'Label',
-
-		render: function render() {
-			return _react2.default.createElement(
-				'p',
-				{
-					onClick: this.props.handleClick
-				},
-				this.props.children
-			);
-		}
-	});
-
-	var Footer = _react2.default.createClass({
-		displayName: 'Footer',
-
-		render: function render() {
-			return _react2.default.createElement(
-				'p',
-				null,
-				'Pomodoro Timer'
-			);
-		}
-	});
-
-	_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
+	ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -21219,6 +21189,124 @@
 	var ReactMount = __webpack_require__(164);
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var Label = React.createClass({
+		displayName: 'Label',
+
+		render: function render() {
+			return React.createElement(
+				'p',
+				{
+					onClick: this.props.handleClick
+				},
+				this.props.children
+			);
+		}
+	});
+
+	module.exports = Label;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var Footer = React.createClass({
+		displayName: 'Footer',
+
+		render: function render() {
+			return React.createElement(
+				'p',
+				null,
+				'Pomodoro Timer'
+			);
+		}
+	});
+
+	module.exports = Footer;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var Time = React.createClass({
+		displayName: 'Time',
+
+		formatTime: function formatTime(seconds) {
+			var minutes = parseInt(seconds / 60);
+			minutes = minutes.length < 2 ? '0' + minutes : minutes;
+			seconds = seconds % 60 + '';
+			seconds = seconds.length < 2 ? '0' + seconds : seconds;
+
+			return minutes + ':' + seconds;
+		},
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'p',
+					null,
+					this.formatTime(this.props.seconds)
+				)
+			);
+		}
+	});
+
+	module.exports = Time;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var Label = __webpack_require__(172);
+
+	var ActionContainer = React.createClass({
+		displayName: 'ActionContainer',
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					Label,
+					{ handleClick: this.props.handlePlayClick },
+					this.props.isRunning ? 'Pause' : 'Play'
+				),
+				React.createElement(
+					Label,
+					{ handleClick: this.props.handleResetClick },
+					'Reset'
+				),
+				React.createElement(
+					Label,
+					{ handleClick: this.props.handleSettingsClick },
+					'Settings'
+				)
+			);
+		}
+	});
+
+	module.exports = ActionContainer;
 
 /***/ }
 /******/ ]);
