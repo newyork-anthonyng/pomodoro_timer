@@ -77,8 +77,12 @@ const App = React.createClass({
 		});
 	},
 
-	handleSettingsClick: function() {
-		console.log('settings clicked');
+	handleSettingsUpdate: function(newDefault) {
+		console.log('updating default values');
+
+		const newDefaults = Object.assign({}, this.state.default, newDefault);
+
+		this.setState({ default: newDefaults });
 	},
 
 	render: function() {
@@ -89,8 +93,9 @@ const App = React.createClass({
 				<ActionContainer
 					handlePlayClick={this.handlePlayClick}
 					handleResetClick={this.handleResetClick}
-					handleSettingsClick={this.handleSettingsClick}
 					isRunning={this.state.isRunning}
+					handleSettingsUpdate={this.handleSettingsUpdate}
+					default={this.state.default}
 				/>
 				<Footer>Pomodoro Timer</Footer>
 			</div>

@@ -127,8 +127,12 @@
 			});
 		},
 
-		handleSettingsClick: function handleSettingsClick() {
-			console.log('settings clicked');
+		handleSettingsUpdate: function handleSettingsUpdate(newDefault) {
+			console.log('updating default values');
+
+			var newDefaults = Object.assign({}, this.state.default, newDefault);
+
+			this.setState({ default: newDefaults });
 		},
 
 		render: function render() {
@@ -144,8 +148,9 @@
 				React.createElement(ActionContainer, {
 					handlePlayClick: this.handlePlayClick,
 					handleResetClick: this.handleResetClick,
-					handleSettingsClick: this.handleSettingsClick,
-					isRunning: this.state.isRunning
+					isRunning: this.state.isRunning,
+					handleSettingsUpdate: this.handleSettingsUpdate,
+					'default': this.state.default
 				}),
 				React.createElement(
 					Footer,
@@ -21279,9 +21284,20 @@
 
 	var React = __webpack_require__(1);
 	var Label = __webpack_require__(172);
+	var Settings = __webpack_require__(176);
 
 	var ActionContainer = React.createClass({
 		displayName: 'ActionContainer',
+
+		getInitialState: function getInitialState() {
+			return {
+				showSettings: false
+			};
+		},
+
+		handleSettingsClick: function handleSettingsClick() {
+			this.setState({ showSettings: !this.state.showSettings });
+		},
 
 		render: function render() {
 			return React.createElement(
@@ -21299,14 +21315,84 @@
 				),
 				React.createElement(
 					Label,
-					{ handleClick: this.props.handleSettingsClick },
+					{ handleClick: this.handleSettingsClick },
 					'Settings'
-				)
+				),
+				React.createElement(Settings, {
+					show: this.state.showSettings,
+					work: this.props.default.work,
+					'break': this.props.default.break,
+					onUpdate: this.props.handleSettingsUpdate
+				})
 			);
 		}
 	});
 
 	module.exports = ActionContainer;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var Settings = React.createClass({
+		displayName: 'Settings',
+
+		handleWorkChange: function handleWorkChange(e) {
+			this.handleChange(e.target.value, 'work');
+		},
+
+		handleBreakChange: function handleBreakChange(e) {
+			this.handleChange(e.target.value, 'break');
+		},
+
+		handleChange: function handleChange(value, mode) {
+			var newDefault = {};
+			newDefault[mode] = value;
+			this.props.onUpdate(newDefault);
+		},
+
+		render: function render() {
+			if (this.props.show) {
+				return React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'p',
+						null,
+						'Work'
+					),
+					React.createElement('input', {
+						type: 'number',
+						min: '1',
+						max: '60',
+						value: this.props.work,
+						onChange: this.handleWorkChange
+					}),
+					React.createElement('br', null),
+					React.createElement(
+						'p',
+						null,
+						'Break'
+					),
+					React.createElement('input', {
+						type: 'number',
+						min: '1',
+						max: '60',
+						value: this.props.break,
+						onChange: this.handleBreakChange
+					})
+				);
+			} else {
+				return null;
+			}
+		}
+	});
+
+	module.exports = Settings;
 
 /***/ }
 /******/ ]);
