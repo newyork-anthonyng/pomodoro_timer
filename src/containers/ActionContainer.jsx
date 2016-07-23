@@ -15,7 +15,7 @@ const ActionContainer = React.createClass({
 
 	render: function() {
 		return (
-			<div>
+			<div id="actions">
 				<Label handleClick={this.props.handlePlayClick}>
 					{this.props.isRunning ? 'Pause' : 'Play'}
 				</Label>

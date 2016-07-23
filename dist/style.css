@@ -1,0 +1,50 @@
+@font-face {
+	font-family: Umbra;
+	src: url('Umbra-Regular.otf');
+}
+
+#app {
+	font-family: Umbra;
+	margin-top: 21px;
+	padding-left: 37px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#time p {
+	font-size: 159px;
+}
+
+#actions p {
+	cursor: pointer;
+	font-size: 37px;
+	display: inline-block;
+	margin-bottom: 21px;
+}
+
+#settings {
+	margin-left: 50px;
+}
+
+#settings p {
+	width: 100px;
+}
+
+#settings input {
+	border: none;
+	font-size: 16px;
+	height: 28px;
+	width: 50px;
+
+	position: relative;
+	left: 28px;
+	top: -5px;
+}
+
+#footer {
+	font-size: 37px;
+	position: absolute;
+	bottom: 21px;
+}

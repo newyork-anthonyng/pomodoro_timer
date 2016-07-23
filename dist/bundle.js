@@ -48,9 +48,9 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
-	var Time = __webpack_require__(174);
-	var ActionContainer = __webpack_require__(175);
-	var Footer = __webpack_require__(173);
+	var Time = __webpack_require__(172);
+	var ActionContainer = __webpack_require__(173);
+	var Footer = __webpack_require__(176);
 
 	var App = React.createClass({
 		displayName: 'App',
@@ -138,12 +138,7 @@
 		render: function render() {
 			return React.createElement(
 				'div',
-				null,
-				React.createElement(
-					'p',
-					null,
-					this.state.isRunning ? 'Is Running' : 'Not Running'
-				),
+				{ className: 'container' },
 				React.createElement(Time, { seconds: this.state.seconds }),
 				React.createElement(ActionContainer, {
 					handlePlayClick: this.handlePlayClick,
@@ -21203,52 +21198,6 @@
 
 	var React = __webpack_require__(1);
 
-	var Label = React.createClass({
-		displayName: 'Label',
-
-		render: function render() {
-			return React.createElement(
-				'p',
-				{
-					onClick: this.props.handleClick
-				},
-				this.props.children
-			);
-		}
-	});
-
-	module.exports = Label;
-
-/***/ },
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
-	var Footer = React.createClass({
-		displayName: 'Footer',
-
-		render: function render() {
-			return React.createElement(
-				'p',
-				null,
-				'Pomodoro Timer'
-			);
-		}
-	});
-
-	module.exports = Footer;
-
-/***/ },
-/* 174 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-
 	var Time = React.createClass({
 		displayName: 'Time',
 
@@ -21264,7 +21213,7 @@
 		render: function render() {
 			return React.createElement(
 				'div',
-				null,
+				{ id: 'time' },
 				React.createElement(
 					'p',
 					null,
@@ -21277,14 +21226,14 @@
 	module.exports = Time;
 
 /***/ },
-/* 175 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Label = __webpack_require__(172);
-	var Settings = __webpack_require__(176);
+	var Label = __webpack_require__(174);
+	var Settings = __webpack_require__(175);
 
 	var ActionContainer = React.createClass({
 		displayName: 'ActionContainer',
@@ -21302,7 +21251,7 @@
 		render: function render() {
 			return React.createElement(
 				'div',
-				null,
+				{ id: 'actions' },
 				React.createElement(
 					Label,
 					{ handleClick: this.props.handlePlayClick },
@@ -21331,7 +21280,35 @@
 	module.exports = ActionContainer;
 
 /***/ },
-/* 176 */
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var Label = React.createClass({
+		displayName: "Label",
+
+		render: function render() {
+			return React.createElement(
+				"div",
+				{ className: "label" },
+				React.createElement(
+					"p",
+					{
+						onClick: this.props.handleClick
+					},
+					this.props.children
+				)
+			);
+		}
+	});
+
+	module.exports = Label;
+
+/***/ },
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21359,7 +21336,7 @@
 			if (this.props.show) {
 				return React.createElement(
 					'div',
-					null,
+					{ id: 'settings' },
 					React.createElement(
 						'p',
 						null,
@@ -21393,6 +21370,32 @@
 	});
 
 	module.exports = Settings;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var Footer = React.createClass({
+		displayName: "Footer",
+
+		render: function render() {
+			return React.createElement(
+				"div",
+				{ id: "footer" },
+				React.createElement(
+					"p",
+					null,
+					"Pomodoro Timer"
+				)
+			);
+		}
+	});
+
+	module.exports = Footer;
 
 /***/ }
 /******/ ]);

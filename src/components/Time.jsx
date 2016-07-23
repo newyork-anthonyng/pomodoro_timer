@@ -12,7 +12,7 @@ const Time = React.createClass({
 
 	render: function() {
 		return (
-			<div>
+			<div id="time">
 				<p>{this.formatTime(this.props.seconds)}</p>
 			</div>
 		);

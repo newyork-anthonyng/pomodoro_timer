@@ -87,8 +87,7 @@ const App = React.createClass({
 
 	render: function() {
 		return (
-			<div>
-				<p>{this.state.isRunning ? 'Is Running' : 'Not Running'}</p>
+			<div className="container">
 				<Time seconds={this.state.seconds} />
 				<ActionContainer
 					handlePlayClick={this.handlePlayClick}

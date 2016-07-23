@@ -3,9 +3,11 @@ const React = require('react');
 const Footer = React.createClass({
 	render: function() {
 		return (
-			<p>
-				Pomodoro Timer
-			</p>
+			<div id="footer">
+				<p>
+					Pomodoro Timer
+				</p>
+			</div>
 		);
 	}
 });

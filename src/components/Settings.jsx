@@ -18,7 +18,7 @@ const Settings = React.createClass({
 	render: function() {
 		if(this.props.show) {
 			return (
-				<div>
+				<div id="settings">
 					<p>Work</p>
 					<input
 						type="number"
