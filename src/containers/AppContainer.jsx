@@ -3,6 +3,7 @@ const ReactDOM = require('react-dom');
 const Time = require('../components/Time.jsx');
 const ActionContainer = require('./ActionContainer.jsx');
 const Footer = require('../components/Footer.jsx');
+const Utility = require('../utility.js');
 const TimerWorker = require('worker!./webworker.js');
 
 const AppContainer = React.createClass({
@@ -12,20 +13,37 @@ const AppContainer = React.createClass({
 			seconds: 0,
 			mode: 'work',
 			default: {
-				'work': 5,
-				'break': 2
+				work: 25 * 60,
+				break: 5 * 60
 			}
 		};
 	},
 
 	componentWillMount: function() {
-		this.intervals = [];
 		this.setState({ seconds: this.state.default.work });
-		this.timerWorker = new TimerWorker();
+		this.setTimerWorker();
 	},
 
 	componentWillUnmount: function() {
-		this.intervals.forEach(clearInterval);
+		this.timerWorker.terminate();
+		this.timerWorker = null;
+	},
+
+	setTimerWorker: function() {
+		this.timerWorker = new TimerWorker();
+		this.timerWorker.addEventListener('message', (e) => {
+			switch(e.data.action) {
+				case 'TICK':
+					this.setState({ seconds: e.data.time });
+					document.title = Utility.formatTime(this.state.seconds);
+					break;
+				case 'COMPLETE':
+					this.setState({ isRunning: false });
+					break;
+				default:
+					return false;
+			};
+		});
 	},
 
 	handlePlayClick: function() {
@@ -39,50 +57,34 @@ const AppContainer = React.createClass({
 	},
 
 	playTimer: function() {
-		console.log('%c playing timer', 'background-color: lightgreen;');
-		const timer = window.setInterval(this.tick, 1000);
-
-		this.intervals.push(timer);
-	},
-
-	tick: function() {
-		if(this.state.seconds <= 0) {
-			if(this.state.mode === 'work') {
-				this.setState({
-					mode: 'break',
-					seconds: this.state.default.break
-				});
-			} else if(this.state.mode === 'break') {
-				this.setState({
-					mode: 'work',
-					seconds: this.state.default.work
-				});
-				this.pauseTimer();
-			}
-		} else {
-			this.setState({ seconds: this.state.seconds - 1 });
-		}
-	},
-
-	pauseTimer: function() {
-		console.log('%c pausing timer', 'background-color: lightpink;');
-		this.intervals.forEach(clearInterval);
-		this.setState({ isRunning: false });
-	},
-
-	handleResetClick: function() {
-		console.log('reset clicked');
-		this.pauseTimer();
-		this.setState({
-			mode: 'work',
-			seconds: this.state.default.work
+		this.timerWorker.postMessage({
+			action: 'START',
+			time: this.state.seconds
 		});
 	},
 
-	handleSettingsUpdate: function(newDefault) {
-		console.log('updating default values');
+	pauseTimer: function() {
+		this.timerWorker.postMessage({
+			action: 'STOP'
+		});
+	},
 
-		const newDefaults = Object.assign({}, this.state.default, newDefault);
+	handleResetClick: function() {
+		this.resetTimer();
+	},
+
+	resetTimer: function() {
+		this.pauseTimer();
+
+		const newSeconds = this.state.default[this.state.mode];
+		this.setState({ seconds: newSeconds });
+	},
+
+	handleSettingsUpdate: function(newDefault) {
+		const formattedDefault = {};
+		formattedDefault[newDefault.type] = Utility.convertMinutesToSeconds(newDefault.time);
+
+		const newDefaults = Object.assign({}, this.state.default, formattedDefault);
 
 		this.setState({ default: newDefaults });
 	},
@@ -90,13 +92,14 @@ const AppContainer = React.createClass({
 	render: function() {
 		return (
 			<div className="container">
-				<Time seconds={this.state.seconds} />
+				<Time seconds={Utility.formatTime(this.state.seconds)} />
 				<ActionContainer
 					handlePlayClick={this.handlePlayClick}
 					handleResetClick={this.handleResetClick}
 					isRunning={this.state.isRunning}
 					handleSettingsUpdate={this.handleSettingsUpdate}
-					default={this.state.default}
+					work={Utility.convertSecondsToMinutes(this.state.default.work)}
+					break={Utility.convertSecondsToMinutes(this.state.default.break)}
 				/>
 				<Footer>Pomodoro Timer</Footer>
 			</div>

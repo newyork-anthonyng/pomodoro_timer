@@ -10,8 +10,10 @@ const Settings = React.createClass({
 	},
 
 	handleChange: function(value, mode) {
-		const newDefault = {};
-		newDefault[mode] = value;
+		const newDefault = {
+			type: mode,
+			time: value
+		};
 		this.props.onUpdate(newDefault);
 	},
 

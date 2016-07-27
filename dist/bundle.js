@@ -21095,6 +21095,8 @@
 	var Time = __webpack_require__(173);
 	var ActionContainer = __webpack_require__(174);
 	var Footer = __webpack_require__(177);
+	var Utility = __webpack_require__(179);
+	var TimerWorker = __webpack_require__(178);
 
 	var AppContainer = React.createClass({
 		displayName: 'AppContainer',
@@ -21105,19 +21107,39 @@
 				seconds: 0,
 				mode: 'work',
 				default: {
-					'work': 5,
-					'break': 2
+					work: 25 * 60,
+					break: 5 * 60
 				}
 			};
 		},
 
 		componentWillMount: function componentWillMount() {
-			this.intervals = [];
 			this.setState({ seconds: this.state.default.work });
+			this.setTimerWorker();
 		},
 
 		componentWillUnmount: function componentWillUnmount() {
-			this.intervals.forEach(clearInterval);
+			this.timerWorker.terminate();
+			this.timerWorker = null;
+		},
+
+		setTimerWorker: function setTimerWorker() {
+			var _this = this;
+
+			this.timerWorker = new TimerWorker();
+			this.timerWorker.addEventListener('message', function (e) {
+				switch (e.data.action) {
+					case 'TICK':
+						_this.setState({ seconds: e.data.time });
+						document.title = Utility.formatTime(_this.state.seconds);
+						break;
+					case 'COMPLETE':
+						_this.setState({ isRunning: false });
+						break;
+					default:
+						return false;
+				};
+			});
 		},
 
 		handlePlayClick: function handlePlayClick() {
@@ -21131,50 +21153,34 @@
 		},
 
 		playTimer: function playTimer() {
-			console.log('%c playing timer', 'background-color: lightgreen;');
-			var timer = window.setInterval(this.tick, 1000);
-
-			this.intervals.push(timer);
-		},
-
-		tick: function tick() {
-			if (this.state.seconds <= 0) {
-				if (this.state.mode === 'work') {
-					this.setState({
-						mode: 'break',
-						seconds: this.state.default.break
-					});
-				} else if (this.state.mode === 'break') {
-					this.setState({
-						mode: 'work',
-						seconds: this.state.default.work
-					});
-					this.pauseTimer();
-				}
-			} else {
-				this.setState({ seconds: this.state.seconds - 1 });
-			}
-		},
-
-		pauseTimer: function pauseTimer() {
-			console.log('%c pausing timer', 'background-color: lightpink;');
-			this.intervals.forEach(clearInterval);
-			this.setState({ isRunning: false });
-		},
-
-		handleResetClick: function handleResetClick() {
-			console.log('reset clicked');
-			this.pauseTimer();
-			this.setState({
-				mode: 'work',
-				seconds: this.state.default.work
+			this.timerWorker.postMessage({
+				action: 'START',
+				time: this.state.seconds
 			});
 		},
 
-		handleSettingsUpdate: function handleSettingsUpdate(newDefault) {
-			console.log('updating default values');
+		pauseTimer: function pauseTimer() {
+			this.timerWorker.postMessage({
+				action: 'STOP'
+			});
+		},
 
-			var newDefaults = Object.assign({}, this.state.default, newDefault);
+		handleResetClick: function handleResetClick() {
+			this.resetTimer();
+		},
+
+		resetTimer: function resetTimer() {
+			this.pauseTimer();
+
+			var newSeconds = this.state.default[this.state.mode];
+			this.setState({ seconds: newSeconds });
+		},
+
+		handleSettingsUpdate: function handleSettingsUpdate(newDefault) {
+			var formattedDefault = {};
+			formattedDefault[newDefault.type] = Utility.convertMinutesToSeconds(newDefault.time);
+
+			var newDefaults = Object.assign({}, this.state.default, formattedDefault);
 
 			this.setState({ default: newDefaults });
 		},
@@ -21183,13 +21189,14 @@
 			return React.createElement(
 				'div',
 				{ className: 'container' },
-				React.createElement(Time, { seconds: this.state.seconds }),
+				React.createElement(Time, { seconds: Utility.formatTime(this.state.seconds) }),
 				React.createElement(ActionContainer, {
 					handlePlayClick: this.handlePlayClick,
 					handleResetClick: this.handleResetClick,
 					isRunning: this.state.isRunning,
 					handleSettingsUpdate: this.handleSettingsUpdate,
-					'default': this.state.default
+					work: Utility.convertSecondsToMinutes(this.state.default.work),
+					'break': Utility.convertSecondsToMinutes(this.state.default.break)
 				}),
 				React.createElement(
 					Footer,
@@ -21206,30 +21213,21 @@
 /* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(1);
 
 	var Time = React.createClass({
-		displayName: 'Time',
-
-		formatTime: function formatTime(seconds) {
-			var minutes = parseInt(seconds / 60);
-			minutes = minutes.length < 2 ? '0' + minutes : minutes;
-			seconds = seconds % 60 + '';
-			seconds = seconds.length < 2 ? '0' + seconds : seconds;
-
-			return minutes + ':' + seconds;
-		},
+		displayName: "Time",
 
 		render: function render() {
 			return React.createElement(
-				'div',
-				{ id: 'time' },
+				"div",
+				{ id: "time" },
 				React.createElement(
-					'p',
+					"p",
 					null,
-					this.formatTime(this.props.seconds)
+					this.props.seconds
 				)
 			);
 		}
@@ -21281,8 +21279,8 @@
 				),
 				React.createElement(Settings, {
 					show: this.state.showSettings,
-					work: this.props.default.work,
-					'break': this.props.default.break,
+					work: this.props.work,
+					'break': this.props.break,
 					onUpdate: this.props.handleSettingsUpdate
 				})
 			);
@@ -21339,8 +21337,10 @@
 		},
 
 		handleChange: function handleChange(value, mode) {
-			var newDefault = {};
-			newDefault[mode] = value;
+			var newDefault = {
+				type: mode,
+				time: value
+			};
 			this.props.onUpdate(newDefault);
 		},
 
@@ -21408,6 +21408,41 @@
 	});
 
 	module.exports = Footer;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function() {
+		return new Worker(__webpack_require__.p + "d42b05ea97a842bd469a.worker.js");
+	};
+
+/***/ },
+/* 179 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var Utility = {
+		formatTime: function formatTime(seconds) {
+			var minutes = parseInt(seconds / 60);
+			minutes = minutes.length < 2 ? '0' + minutes : minutes;
+			seconds = seconds % 60 + '';
+			seconds = seconds.length < 2 ? '0' + seconds : seconds;
+
+			return minutes + ':' + seconds;
+		},
+
+		convertMinutesToSeconds: function convertMinutesToSeconds(minutes) {
+			return minutes * 60;
+		},
+
+		convertSecondsToMinutes: function convertSecondsToMinutes(seconds) {
+			return parseInt(seconds / 60);
+		}
+	};
+
+	module.exports = Utility;
 
 /***/ }
 /******/ ]);

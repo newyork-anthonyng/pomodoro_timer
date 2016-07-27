@@ -30,8 +30,8 @@ const ActionContainer = React.createClass({
 
 				<Settings
 					show={this.state.showSettings}
-					work={this.props.default.work}
-					break={this.props.default.break}
+					work={this.props.work}
+					break={this.props.break}
 					onUpdate={this.props.handleSettingsUpdate}
 				/>
 			</div>
