@@ -48,115 +48,9 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
-	var Time = __webpack_require__(172);
-	var ActionContainer = __webpack_require__(173);
-	var Footer = __webpack_require__(176);
+	var AppContainer = __webpack_require__(172);
 
-	var App = React.createClass({
-		displayName: 'App',
-
-		getInitialState: function getInitialState() {
-			return {
-				isRunning: false,
-				seconds: 0,
-				mode: 'work',
-				default: {
-					'work': 5,
-					'break': 2
-				}
-			};
-		},
-
-		componentWillMount: function componentWillMount() {
-			this.intervals = [];
-			this.setState({ seconds: this.state.default.work });
-		},
-
-		componentWillUnmount: function componentWillUnmount() {
-			this.intervals.forEach(clearInterval);
-		},
-
-		handlePlayClick: function handlePlayClick() {
-			if (this.state.isRunning) {
-				this.pauseTimer();
-			} else {
-				this.playTimer();
-			}
-
-			this.setState({ isRunning: !this.state.isRunning });
-		},
-
-		playTimer: function playTimer() {
-			console.log('%c playing timer', 'background-color: lightgreen;');
-			var timer = window.setInterval(this.tick, 1000);
-
-			this.intervals.push(timer);
-		},
-
-		tick: function tick() {
-			if (this.state.seconds <= 0) {
-				if (this.state.mode === 'work') {
-					this.setState({
-						mode: 'break',
-						seconds: this.state.default.break
-					});
-				} else if (this.state.mode === 'break') {
-					this.setState({
-						mode: 'work',
-						seconds: this.state.default.work
-					});
-					this.pauseTimer();
-				}
-			} else {
-				this.setState({ seconds: this.state.seconds - 1 });
-			}
-		},
-
-		pauseTimer: function pauseTimer() {
-			console.log('%c pausing timer', 'background-color: lightpink;');
-			this.intervals.forEach(clearInterval);
-			this.setState({ isRunning: false });
-		},
-
-		handleResetClick: function handleResetClick() {
-			console.log('reset clicked');
-			this.pauseTimer();
-			this.setState({
-				mode: 'work',
-				seconds: this.state.default.work
-			});
-		},
-
-		handleSettingsUpdate: function handleSettingsUpdate(newDefault) {
-			console.log('updating default values');
-
-			var newDefaults = Object.assign({}, this.state.default, newDefault);
-
-			this.setState({ default: newDefaults });
-		},
-
-		render: function render() {
-			return React.createElement(
-				'div',
-				{ className: 'container' },
-				React.createElement(Time, { seconds: this.state.seconds }),
-				React.createElement(ActionContainer, {
-					handlePlayClick: this.handlePlayClick,
-					handleResetClick: this.handleResetClick,
-					isRunning: this.state.isRunning,
-					handleSettingsUpdate: this.handleSettingsUpdate,
-					'default': this.state.default
-				}),
-				React.createElement(
-					Footer,
-					null,
-					'Pomodoro Timer'
-				)
-			);
-		}
-	});
-
-	ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
+	ReactDOM.render(React.createElement(AppContainer, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -21197,6 +21091,124 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(33);
+	var Time = __webpack_require__(173);
+	var ActionContainer = __webpack_require__(174);
+	var Footer = __webpack_require__(177);
+
+	var AppContainer = React.createClass({
+		displayName: 'AppContainer',
+
+		getInitialState: function getInitialState() {
+			return {
+				isRunning: false,
+				seconds: 0,
+				mode: 'work',
+				default: {
+					'work': 5,
+					'break': 2
+				}
+			};
+		},
+
+		componentWillMount: function componentWillMount() {
+			this.intervals = [];
+			this.setState({ seconds: this.state.default.work });
+		},
+
+		componentWillUnmount: function componentWillUnmount() {
+			this.intervals.forEach(clearInterval);
+		},
+
+		handlePlayClick: function handlePlayClick() {
+			if (this.state.isRunning) {
+				this.pauseTimer();
+			} else {
+				this.playTimer();
+			}
+
+			this.setState({ isRunning: !this.state.isRunning });
+		},
+
+		playTimer: function playTimer() {
+			console.log('%c playing timer', 'background-color: lightgreen;');
+			var timer = window.setInterval(this.tick, 1000);
+
+			this.intervals.push(timer);
+		},
+
+		tick: function tick() {
+			if (this.state.seconds <= 0) {
+				if (this.state.mode === 'work') {
+					this.setState({
+						mode: 'break',
+						seconds: this.state.default.break
+					});
+				} else if (this.state.mode === 'break') {
+					this.setState({
+						mode: 'work',
+						seconds: this.state.default.work
+					});
+					this.pauseTimer();
+				}
+			} else {
+				this.setState({ seconds: this.state.seconds - 1 });
+			}
+		},
+
+		pauseTimer: function pauseTimer() {
+			console.log('%c pausing timer', 'background-color: lightpink;');
+			this.intervals.forEach(clearInterval);
+			this.setState({ isRunning: false });
+		},
+
+		handleResetClick: function handleResetClick() {
+			console.log('reset clicked');
+			this.pauseTimer();
+			this.setState({
+				mode: 'work',
+				seconds: this.state.default.work
+			});
+		},
+
+		handleSettingsUpdate: function handleSettingsUpdate(newDefault) {
+			console.log('updating default values');
+
+			var newDefaults = Object.assign({}, this.state.default, newDefault);
+
+			this.setState({ default: newDefaults });
+		},
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'container' },
+				React.createElement(Time, { seconds: this.state.seconds }),
+				React.createElement(ActionContainer, {
+					handlePlayClick: this.handlePlayClick,
+					handleResetClick: this.handleResetClick,
+					isRunning: this.state.isRunning,
+					handleSettingsUpdate: this.handleSettingsUpdate,
+					'default': this.state.default
+				}),
+				React.createElement(
+					Footer,
+					null,
+					'Pomodoro Timer'
+				)
+			);
+		}
+	});
+
+	module.exports = AppContainer;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
 
 	var Time = React.createClass({
 		displayName: 'Time',
@@ -21226,14 +21238,14 @@
 	module.exports = Time;
 
 /***/ },
-/* 173 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Label = __webpack_require__(174);
-	var Settings = __webpack_require__(175);
+	var Label = __webpack_require__(175);
+	var Settings = __webpack_require__(176);
 
 	var ActionContainer = React.createClass({
 		displayName: 'ActionContainer',
@@ -21280,7 +21292,7 @@
 	module.exports = ActionContainer;
 
 /***/ },
-/* 174 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21308,7 +21320,7 @@
 	module.exports = Label;
 
 /***/ },
-/* 175 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21372,7 +21384,7 @@
 	module.exports = Settings;
 
 /***/ },
-/* 176 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
