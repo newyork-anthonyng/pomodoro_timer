@@ -5,7 +5,6 @@ const app = express();
 const path = require('path');
 const logger = require('morgan');
 const request = require('request');
-const Utility = require('./public/utility');
 
 app.use(express.static('dist'));
 app.use(logger('dev'));
@@ -43,3 +42,27 @@ const server = app.listen(process.env.PORT || 3000, () => {
 });
 
 module.exports = app;
+
+const Utility = {
+  // *** Parse through query string *** //
+  // *** Example:
+  // *** localhost:3000/home?param1=value1&param2=value2
+  // *** returns { param1: value1, param2: value2 }
+  parseQueryString: function(url) {
+    const formattedUrl = url.replace(/%2C/g, ',');  // replace commas
+    const queryString = formattedUrl.split('?')[1];
+
+    if(!queryString) return false;
+
+    const queryArray = queryString.split('&');
+    const myData = {};
+
+    for(let i = 0; i < queryArray.length; i++) {
+      let currentQuery = queryArray[i].split('=');
+
+      myData[currentQuery[0]] = currentQuery[1];
+    }
+
+    return myData;
+  }
+}
