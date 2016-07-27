@@ -39,6 +39,7 @@ const AppContainer = React.createClass({
 					break;
 				case 'COMPLETE':
 					this.setState({ isRunning: false });
+					Utility.displayNotification('Take a break', 'You\'ve earned it!');
 					break;
 				default:
 					return false;

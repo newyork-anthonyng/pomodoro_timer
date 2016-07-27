@@ -21095,8 +21095,8 @@
 	var Time = __webpack_require__(173);
 	var ActionContainer = __webpack_require__(174);
 	var Footer = __webpack_require__(177);
-	var Utility = __webpack_require__(179);
-	var TimerWorker = __webpack_require__(178);
+	var Utility = __webpack_require__(178);
+	var TimerWorker = __webpack_require__(179);
 
 	var AppContainer = React.createClass({
 		displayName: 'AppContainer',
@@ -21135,6 +21135,7 @@
 						break;
 					case 'COMPLETE':
 						_this.setState({ isRunning: false });
+						Utility.displayNotification('Take a break', 'You\'ve earned it!');
 						break;
 					default:
 						return false;
@@ -21411,38 +21412,67 @@
 
 /***/ },
 /* 178 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function() {
-		return new Worker(__webpack_require__.p + "d42b05ea97a842bd469a.worker.js");
-	};
-
-/***/ },
-/* 179 */
 /***/ function(module, exports) {
 
 	'use strict';
 
-	var Utility = {
-		formatTime: function formatTime(seconds) {
+	//const Utility = {
+	var Utility = function () {
+		function formatTime(seconds) {
 			var minutes = parseInt(seconds / 60);
 			minutes = minutes.length < 2 ? '0' + minutes : minutes;
 			seconds = seconds % 60 + '';
 			seconds = seconds.length < 2 ? '0' + seconds : seconds;
 
 			return minutes + ':' + seconds;
-		},
+		};
 
-		convertMinutesToSeconds: function convertMinutesToSeconds(minutes) {
+		function convertMinutesToSeconds(minutes) {
 			return minutes * 60;
-		},
+		};
 
-		convertSecondsToMinutes: function convertSecondsToMinutes(seconds) {
+		function convertSecondsToMinutes(seconds) {
 			return parseInt(seconds / 60);
-		}
-	};
+		};
+
+		function displayNotification(title, body) {
+			if (!('Notification' in window)) return;
+
+			if (Notification.permission === 'denied') {
+				return Notification.requestPermission(function (permission) {
+					if (permission === 'granted') {
+						showNotification(title, body);
+					}
+				});
+			}
+
+			showNotification(title, body);
+		};
+
+		function showNotification(title, body) {
+			new Notification(title, {
+				body: body
+			});
+		};
+
+		return {
+			formatTime: formatTime,
+			convertMinutesToSeconds: convertMinutesToSeconds,
+			convertSecondsToMinutes: convertSecondsToMinutes,
+			displayNotification: displayNotification
+		};
+		//};
+	}();
 
 	module.exports = Utility;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function() {
+		return new Worker(__webpack_require__.p + "d42b05ea97a842bd469a.worker.js");
+	};
 
 /***/ }
 /******/ ]);
