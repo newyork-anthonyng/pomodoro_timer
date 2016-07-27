@@ -3,6 +3,7 @@ const ReactDOM = require('react-dom');
 const Time = require('../components/Time.jsx');
 const ActionContainer = require('./ActionContainer.jsx');
 const Footer = require('../components/Footer.jsx');
+const TimerWorker = require('worker!./webworker.js');
 
 const AppContainer = React.createClass({
 	getInitialState: function() {
@@ -20,6 +21,7 @@ const AppContainer = React.createClass({
 	componentWillMount: function() {
 		this.intervals = [];
 		this.setState({ seconds: this.state.default.work });
+		this.timerWorker = new TimerWorker();
 	},
 
 	componentWillUnmount: function() {
