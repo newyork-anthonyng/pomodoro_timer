@@ -1,15 +1,11 @@
-const React = require('react');
+import React from 'react';
 
-const Footer = React.createClass({
-	render: function() {
-		return (
-			<div id="footer">
-				<p>
-					Pomodoro Timer
-				</p>
-			</div>
-		);
-	}
-});
-
-module.exports = Footer;
+export function Footer() {
+	return (
+		<div id="footer">
+			<p>
+				Pomodoro Timer
+			</p>
+		</div>
+	);
+};

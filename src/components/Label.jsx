@@ -1,17 +1,15 @@
-const React = require('react');
+import React from 'react';
 
-const Label = React.createClass({
-	render: function() {
-		return (
-			<div className="label">
-				<p
-					onClick={this.props.handleClick}
-				>
-					{this.props.children}
-				</p>
-			</div>
-		);
-	}
-});
+export function Label(props){
+	const { handleClick } = props;
 
-module.exports = Label;
+	return (
+		<div className="label">
+			<p
+				onClick={handleClick}
+			>
+				{this.props.children}
+			</p>
+		</div>
+	);
+};

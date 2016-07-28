@@ -1,13 +1,11 @@
-const React = require('react');
+import React from 'react';
 
-const Time = React.createClass({
-	render: function() {
-		return (
-			<div id="time">
-				<p>{this.props.seconds}</p>
-			</div>
-		);
-	}
-});
+export function Time(props) {
+	const { seconds } = props;
 
-module.exports = Time;
+	return (
+		<div id="time">
+			<p>{seconds}</p>
+		</div>
+	);
+};
