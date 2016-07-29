@@ -62,6 +62,8 @@
 
 	var _App = __webpack_require__(202);
 
+	var _App2 = _interopRequireDefault(_App);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var store = (0, _redux.createStore)(_reducer2.default);
@@ -69,7 +71,7 @@
 	(0, _reactDom.render)(_react2.default.createElement(
 		_reactRedux.Provider,
 		{ store: store },
-		_react2.default.createElement(_App.App, null)
+		_react2.default.createElement(_App2.default, null)
 	), document.getElementById('app'));
 
 /***/ },
@@ -22982,7 +22984,6 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.App = App;
 
 	var _react = __webpack_require__(1);
 
@@ -22992,24 +22993,69 @@
 
 	var _TimeContainer = __webpack_require__(203);
 
-	var _TimerLabelsContainer = __webpack_require__(205);
+	var _TimerLabels = __webpack_require__(206);
 
-	var _SettingsContainer = __webpack_require__(209);
+	var _SettingsContainer = __webpack_require__(208);
 
-	var _Footer = __webpack_require__(207);
+	var _Footer = __webpack_require__(211);
+
+	var _actions = __webpack_require__(201);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function App() {
-		return _react2.default.createElement(
-			'div',
-			null,
-			_react2.default.createElement(_TimeContainer.TimeContainer, null),
-			_react2.default.createElement(_TimerLabelsContainer.TimerLabelsContainer, null),
-			_react2.default.createElement(_SettingsContainer.SettingsContainer, null),
-			_react2.default.createElement(_Footer.Footer, null)
-		);
+	var App = _react2.default.createClass({
+		displayName: 'App',
+
+		playTimer: function playTimer() {
+			console.log('play timer');
+			this.props.startTimer();
+		},
+
+		resetTimer: function resetTimer() {
+			console.log('reset timer');
+		},
+
+		toggleSettings: function toggleSettings() {
+			console.log('toggle settings');
+			this.props.toggleSettingsPanel();
+		},
+
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(_TimeContainer.TimeContainer, null),
+				_react2.default.createElement(_TimerLabels.TimerLabels, {
+					handlePlayClick: this.playTimer,
+					handleResetClick: this.resetTimer,
+					handleSettingsClick: this.toggleSettings,
+					isRunning: this.props.isRunning
+				}),
+				_react2.default.createElement(_SettingsContainer.SettingsContainer, null),
+				_react2.default.createElement(_Footer.Footer, null)
+			);
+		}
+	});
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return state;
 	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			startTimer: function startTimer() {
+				dispatch((0, _actions.startTimer)());
+			},
+			stopTimer: function stopTimer() {
+				dispatch((0, _actions.stopTimer)());
+			},
+			toggleSettingsPanel: function toggleSettingsPanel() {
+				dispatch((0, _actions.toggleSettingsPanel)());
+			}
+		};
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ },
 /* 203 */
@@ -23077,51 +23123,7 @@
 	};
 
 /***/ },
-/* 205 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.TimerLabelsContainer = undefined;
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(186);
-
-	var _TimerLabels = __webpack_require__(206);
-
-	var _actions = __webpack_require__(201);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var mapStateToProps = function mapStateToProps(state) {
-		return {
-			isRunning: state.isRunning
-		};
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-		return {
-			handlePlayClick: function handlePlayClick() {
-				dispatch((0, _actions.startTimer)());
-			},
-			handleResetClick: function handleResetClick() {
-				dispatch((0, _actions.stopTimer)());
-			},
-			handleSettingsClick: function handleSettingsClick() {
-				dispatch((0, _actions.toggleSettingsPanel)());
-			}
-		};
-	};
-
-	var TimerLabelsContainer = exports.TimerLabelsContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_TimerLabels.TimerLabels);
-
-/***/ },
+/* 205 */,
 /* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -23136,7 +23138,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Label = __webpack_require__(208);
+	var _Label = __webpack_require__(207);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23183,35 +23185,6 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.Footer = Footer;
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function Footer() {
-		return _react2.default.createElement(
-			"div",
-			{ id: "footer" },
-			_react2.default.createElement(
-				"p",
-				null,
-				"Pomodoro Timer"
-			)
-		);
-	};
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
 	exports.Label = Label;
 
 	var _react = __webpack_require__(1);
@@ -23238,7 +23211,7 @@
 	};
 
 /***/ },
-/* 209 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23254,7 +23227,7 @@
 
 	var _reactRedux = __webpack_require__(186);
 
-	var _Settings = __webpack_require__(210);
+	var _Settings = __webpack_require__(209);
 
 	var _actions = __webpack_require__(201);
 
@@ -23286,7 +23259,7 @@
 	var SettingsContainer = exports.SettingsContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Settings.Settings);
 
 /***/ },
-/* 210 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23300,7 +23273,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _SettingInput = __webpack_require__(211);
+	var _SettingInput = __webpack_require__(210);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23342,7 +23315,7 @@
 	};
 
 /***/ },
-/* 211 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23370,6 +23343,35 @@
 			value: value,
 			onChange: handleChange
 		});
+	};
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Footer = Footer;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Footer() {
+		return _react2.default.createElement(
+			"div",
+			{ id: "footer" },
+			_react2.default.createElement(
+				"p",
+				null,
+				"Pomodoro Timer"
+			)
+		);
 	};
 
 /***/ }
