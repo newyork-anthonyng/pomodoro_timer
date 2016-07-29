@@ -44,8 +44,9 @@
 	top: -5px;
 }
 
-#footer {
+footer {
 	font-size: 37px;
+	min-width: 360px;
 	position: absolute;
 	bottom: 21px;
 }

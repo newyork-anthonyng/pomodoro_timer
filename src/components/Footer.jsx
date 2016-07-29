@@ -2,10 +2,10 @@ import React from 'react';
 
 export function Footer() {
 	return (
-		<div id="footer">
+		<footer>
 			<p>
 				Pomodoro Timer
 			</p>
-		</div>
+		</footer>
 	);
 };
