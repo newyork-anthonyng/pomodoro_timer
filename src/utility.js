@@ -16,30 +16,9 @@ export default (function() {
 		return parseInt(seconds / 60);
 	};
 
-	function displayNotification(title, body) {
-		if(!('Notification' in window)) return;
-
-		if(Notification.permission === 'denied') {
-			return Notification.requestPermission((permission) => {
-				if(permission === 'granted') {
-					showNotification(title, body);
-				}
-			});
-		}
-
-		showNotification(title, body);
-	};
-
-	function showNotification(title, body) {
-		new Notification(title, {
-			body: body
-		});
-	};
-
 	return {
 		formatTime: formatTime,
 		convertMinutesToSeconds: convertMinutesToSeconds,
-		convertSecondsToMinutes: convertSecondsToMinutes,
-		displayNotification: displayNotification
+		convertSecondsToMinutes: convertSecondsToMinutes
 	};
 })();
