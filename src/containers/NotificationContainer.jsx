@@ -6,7 +6,7 @@ const mapStateToProps = (state) => {
 	return {
 		mode: state.mode,
 		title: state.mode === 'break' ? 'Take a break!' : 'Back to work!',
-		audioSource: 'assets/beep.wav',
+		audioSource: state.mode === 'break' ? 'assets/break.mp3' : 'assets/beep.wav',
 	};
 };
 
