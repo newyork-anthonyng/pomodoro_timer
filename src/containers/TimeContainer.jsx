@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Time } from '../components/Time';
+import Utility from '../utility';
 
 const mapStateToProps = (state) => {
 	return {
-		seconds: state.seconds
+		time: Utility.formatTime(state.seconds)
 	};
 };
 

@@ -1,5 +1,4 @@
-//const Utility = {
-const Utility = (function() {
+export default (function() {
 	function formatTime(seconds) {
 		let minutes = parseInt(seconds / 60);
 		minutes = minutes.length < 2 ? '0' + minutes : minutes;
@@ -43,7 +42,4 @@ const Utility = (function() {
 		convertSecondsToMinutes: convertSecondsToMinutes,
 		displayNotification: displayNotification
 	};
-//};
 })();
-
-module.exports = Utility;

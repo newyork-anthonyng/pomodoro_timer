@@ -1,11 +1,11 @@
 import React from 'react';
 
 export function Time(props) {
-	const { seconds } = props;
+	const { time } = props;
 
 	return (
 		<div id="time">
-			<p>{seconds}</p>
+			<p>{time}</p>
 		</div>
 	);
 };
