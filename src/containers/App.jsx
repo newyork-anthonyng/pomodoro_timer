@@ -25,15 +25,29 @@ let App = React.createClass({
 		});
 	},
 
-	playTimer: function() {
-		console.log('play timer');
+	handlePlayClick: function() {
+		if(!this.props.isRunning) {
+			this.playTimer();
+		} else {
+			this.pauseTimer();
+		}
+	},
 
+	playTimer: function() {
 		this.timerWorker.postMessage({
 			action: 'START',
 			time: this.props.seconds
 		});
 
 		this.props.startTimer();
+	},
+
+	pauseTimer: function() {
+		this.timerWorker.postMessage({
+			action: 'STOP'
+		});
+
+		this.props.stopTimer();
 	},
 
 	resetTimer: function() {
@@ -50,7 +64,7 @@ let App = React.createClass({
 			<div>
 				<TimeContainer />
 				<TimerLabels
-					handlePlayClick={this.playTimer}
+					handlePlayClick={this.handlePlayClick}
 					handleResetClick={this.resetTimer}
 					handleSettingsClick={this.toggleSettings}
 					isRunning={this.props.isRunning}
