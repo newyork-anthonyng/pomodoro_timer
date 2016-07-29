@@ -4,11 +4,35 @@ import { TimeContainer } from './TimeContainer';
 import { TimerLabels } from '../components/TimerLabels';
 import { SettingsContainer } from './SettingsContainer';
 import { Footer } from '../components/Footer';
-import { startTimer, stopTimer, toggleSettingsPanel } from '../actions';
+import { startTimer, setTime, stopTimer, toggleSettingsPanel } from '../actions';
+
+const TimerWorker = require('worker!./webworker.js');
 
 let App = React.createClass({
+	componentWillMount: function() {
+		this.setWorker();
+	},
+
+	setWorker: function() {
+		this.timerWorker = new TimerWorker();
+
+		this.timerWorker.addEventListener('message', (e) => {
+			switch(e.data.action) {
+				case 'TICK':
+					this.props.setTime(e.data.time);
+					break;
+			}
+		});
+	},
+
 	playTimer: function() {
 		console.log('play timer');
+
+		this.timerWorker.postMessage({
+			action: 'START',
+			time: this.props.seconds
+		});
+
 		this.props.startTimer();
 	},
 
@@ -46,6 +70,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		startTimer: () => {
 			dispatch(startTimer());
+		},
+		setTime: (seconds) => {
+			dispatch(setTime(seconds));
 		},
 		stopTimer: () => {
 			dispatch(stopTimer());
