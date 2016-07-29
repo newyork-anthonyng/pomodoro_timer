@@ -22872,9 +22872,32 @@
 
 		switch (action.type) {
 			case _actions.START_TIMER:
+				console.log('start_timer');
+				return Object.assign({}, state, {
+					isRunning: !state.isRunning
+				});
 			case _actions.STOP_TIMER:
+				console.log('stop_timer');
+				return Object.assign({}, state, {
+					isRunning: false
+				});
+			case _actions.SET_TIME:
+				console.log('setting_time');
+				return Object.assign({}, state, {
+					seconds: action.seconds
+				});
 			case _actions.UPDATE_SETTINGS:
-			case _actions.SET_COMPLETE:
+				console.log('update_settings');
+				var newSettings = Object.assign({}, state.default, action.settings);
+				return Object.assign({}, state, {
+					default: newSettings
+				});
+			case _actions.TOGGLE_SETTINGS_PANEL:
+				console.log('toggle settings panel');
+				console.log(state.settingsPanelOpen);
+				return Object.assign({}, state, {
+					settingsPanelOpen: !state.settingsPanelOpen
+				});
 			default:
 				return state;
 		};
@@ -22887,8 +22910,9 @@
 
 	var initialData = {
 		isRunning: false,
-		seconds: 25 * 60,
+		seconds: DEFAULT_WORK_SETTING,
 		mode: 'work',
+		settingsPanelOpen: false,
 		default: {
 			work: DEFAULT_WORK_SETTING,
 			break: DEFAULT_BREAK_SETTING
@@ -22910,12 +22934,12 @@
 	exports.stopTimer = stopTimer;
 	exports.setTime = setTime;
 	exports.updateSettings = updateSettings;
-	exports.setComplete = setComplete;
+	exports.toggleSettingsPanel = toggleSettingsPanel;
 	var START_TIMER = exports.START_TIMER = 'START_TIMER';
 	var STOP_TIMER = exports.STOP_TIMER = 'STOP_TIMER';
 	var SET_TIME = exports.SET_TIME = 'SET_TIME';
 	var UPDATE_SETTINGS = exports.UPDATE_SETTINGS = 'UPDATE_SETTINGS';
-	var SET_COMPLETE = exports.SET_COMPLETE = 'SET_COMPLETE';
+	var TOGGLE_SETTINGS_PANEL = exports.TOGGLE_SETTINGS_PANEL = 'TOGGLE_SETTINGS_PANEL';
 
 	function startTimer() {
 		return {
@@ -22943,9 +22967,9 @@
 		};
 	};
 
-	function setComplete() {
+	function toggleSettingsPanel() {
 		return {
-			type: SET_COMPLETE
+			type: TOGGLE_SETTINGS_PANEL
 		};
 	};
 
@@ -22968,7 +22992,11 @@
 
 	var _TimeContainer = __webpack_require__(203);
 
-	var _Footer = __webpack_require__(205);
+	var _TimerLabelsContainer = __webpack_require__(205);
+
+	var _SettingsContainer = __webpack_require__(209);
+
+	var _Footer = __webpack_require__(207);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22977,6 +23005,8 @@
 			'div',
 			null,
 			_react2.default.createElement(_TimeContainer.TimeContainer, null),
+			_react2.default.createElement(_TimerLabelsContainer.TimerLabelsContainer, null),
+			_react2.default.createElement(_SettingsContainer.SettingsContainer, null),
 			_react2.default.createElement(_Footer.Footer, null)
 		);
 	};
@@ -23050,6 +23080,104 @@
 /* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.TimerLabelsContainer = undefined;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(186);
+
+	var _TimerLabels = __webpack_require__(206);
+
+	var _actions = __webpack_require__(201);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			isRunning: state.isRunning
+		};
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			handlePlayClick: function handlePlayClick() {
+				dispatch((0, _actions.startTimer)());
+			},
+			handleResetClick: function handleResetClick() {
+				dispatch((0, _actions.stopTimer)());
+			},
+			handleSettingsClick: function handleSettingsClick() {
+				dispatch((0, _actions.toggleSettingsPanel)());
+			}
+		};
+	};
+
+	var TimerLabelsContainer = exports.TimerLabelsContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_TimerLabels.TimerLabels);
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.TimerLabels = TimerLabels;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Label = __webpack_require__(208);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function TimerLabels(props) {
+		var handlePlayClick = props.handlePlayClick;
+		var handleResetClick = props.handleResetClick;
+		var handleSettingsClick = props.handleSettingsClick;
+		var isRunning = props.isRunning;
+
+
+		return _react2.default.createElement(
+			'div',
+			{ id: 'actions' },
+			_react2.default.createElement(
+				_Label.Label,
+				{
+					handleClick: handlePlayClick
+				},
+				isRunning ? 'Pause' : 'Play'
+			),
+			_react2.default.createElement(
+				_Label.Label,
+				{
+					handleClick: handleResetClick
+				},
+				'Reset'
+			),
+			_react2.default.createElement(
+				_Label.Label,
+				{
+					handleClick: handleSettingsClick
+				},
+				'Settings'
+			)
+		);
+	};
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
@@ -23073,6 +23201,175 @@
 				"Pomodoro Timer"
 			)
 		);
+	};
+
+/***/ },
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Label = Label;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Label(props) {
+		var handleClick = props.handleClick;
+
+
+		return _react2.default.createElement(
+			"div",
+			{ className: "label" },
+			_react2.default.createElement(
+				"p",
+				{
+					onClick: handleClick
+				},
+				props.children
+			)
+		);
+	};
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.SettingsContainer = undefined;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(186);
+
+	var _Settings = __webpack_require__(210);
+
+	var _actions = __webpack_require__(201);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			settingsPanelOpen: state.settingsPanelOpen,
+			workDefault: state.default.work,
+			breakDefault: state.default.break
+		};
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			handleWorkChange: function handleWorkChange(e) {
+				dispatch((0, _actions.updateSettings)({
+					work: e.target.value
+				}));
+			},
+			handleBreakChange: function handleBreakChange(e) {
+				dispatch((0, _actions.updateSettings)({
+					break: e.target.value
+				}));
+			}
+		};
+	};
+
+	var SettingsContainer = exports.SettingsContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Settings.Settings);
+
+/***/ },
+/* 210 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.Settings = Settings;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SettingInput = __webpack_require__(211);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function Settings(props) {
+		var handleWorkChange = props.handleWorkChange;
+		var handleBreakChange = props.handleBreakChange;
+		var settingsPanelOpen = props.settingsPanelOpen;
+		var workDefault = props.workDefault;
+		var breakDefault = props.breakDefault;
+
+
+		if (settingsPanelOpen) {
+			return _react2.default.createElement(
+				'div',
+				{ id: 'settings' },
+				_react2.default.createElement(
+					'p',
+					null,
+					'Work'
+				),
+				_react2.default.createElement(_SettingInput.SettingInput, {
+					value: workDefault,
+					handleChange: handleWorkChange
+				}),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					'p',
+					null,
+					'Break'
+				),
+				_react2.default.createElement(_SettingInput.SettingInput, {
+					value: breakDefault,
+					handleChange: handleBreakChange
+				})
+			);
+		} else {
+			return null;
+		}
+	};
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.SettingInput = SettingInput;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function SettingInput(props) {
+		var handleChange = props.handleChange;
+		var value = props.value;
+
+
+		return _react2.default.createElement("input", {
+			type: "number",
+			min: "1",
+			max: "60",
+			value: value,
+			onChange: handleChange
+		});
 	};
 
 /***/ }

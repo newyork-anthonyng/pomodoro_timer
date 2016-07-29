@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function Label(props){
+export function Label(props) {
 	const { handleClick } = props;
 
 	return (
@@ -8,7 +8,7 @@ export function Label(props){
 			<p
 				onClick={handleClick}
 			>
-				{this.props.children}
+				{props.children}
 			</p>
 		</div>
 	);

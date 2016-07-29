@@ -17,7 +17,8 @@
 	font-size: 159px;
 }
 
-#actions p {
+#actions p,
+#settings p {
 	cursor: pointer;
 	font-size: 37px;
 	display: inline-block;

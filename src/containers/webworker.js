@@ -1,5 +1,3 @@
-console.log('%c Webworker.js loaded.', 'background-color: lightblue;');
-
 let currentTime = 0;
 let timer = null;
 const SECOND = 1000;

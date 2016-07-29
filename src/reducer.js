@@ -1,12 +1,13 @@
-import { START_TIMER, STOP_TIMER, SET_TIME, UPDATE_SETTINGS, SET_COMPLETE } from './actions';
+import { START_TIMER, STOP_TIMER, SET_TIME, UPDATE_SETTINGS, TOGGLE_SETTINGS_PANEL } from './actions';
 
 const DEFAULT_WORK_SETTING = 25 * 60;
 const DEFAULT_BREAK_SETTING = 5 * 60;
 
 const initialData = {
 	isRunning: false,
-	seconds: 25 * 60,
+	seconds: DEFAULT_WORK_SETTING,
 	mode: 'work',
+	settingsPanelOpen: false,
 	default: {
 		work: DEFAULT_WORK_SETTING,
 		break: DEFAULT_BREAK_SETTING
@@ -16,9 +17,32 @@ const initialData = {
 export default function(state = initialData, action) {
 	switch(action.type) {
 		case START_TIMER:
+			console.log('start_timer');
+			return Object.assign({}, state, {
+				isRunning: !state.isRunning
+			});
 		case STOP_TIMER:
+			console.log('stop_timer');
+			return Object.assign({}, state, {
+				isRunning: false
+			});
+		case SET_TIME:
+			console.log('setting_time');
+			return Object.assign({}, state, {
+				seconds: action.seconds
+			});
 		case UPDATE_SETTINGS:
-		case SET_COMPLETE:
+			console.log('update_settings');
+			const newSettings = Object.assign({}, state.default, action.settings);
+			return Object.assign({}, state, {
+				default: newSettings
+			});
+		case TOGGLE_SETTINGS_PANEL:
+			console.log('toggle settings panel');
+			console.log(state.settingsPanelOpen);
+			return Object.assign({}, state, {
+				settingsPanelOpen: !state.settingsPanelOpen
+			});
 		default:
 			return state;
 	};
