@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Settings } from '../components/Settings';
 import { toggleSettingsPanel, updateSettings } from '../actions';
-import Utility from '../utility';
+import Utility from '../util/utility';
 
 const mapStateToProps = (state) => {
 	return {

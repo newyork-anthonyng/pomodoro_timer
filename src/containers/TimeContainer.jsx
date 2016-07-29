@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Time } from '../components/Time';
-import Utility from '../utility';
+import Utility from '../util/utility';
 
 const mapStateToProps = (state) => {
 	return {
