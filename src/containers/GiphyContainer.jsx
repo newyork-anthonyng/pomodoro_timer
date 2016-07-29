@@ -29,9 +29,7 @@ const GiphyContainer = React.createClass({
 	render: function() {
 		if(this.props.mode === 'break') {
 			return (
-				<Giphy
-					src={this.state.giphySource}
-				/>
+				<Giphy src={this.state.giphySource} />
 			);
 		} else {
 			return null;

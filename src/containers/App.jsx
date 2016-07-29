@@ -8,7 +8,6 @@ import { GiphyContainer } from './GiphyContainer';
 import { NotificationContainer } from './NotificationContainer';
 import { startTimer, setTime, stopTimer, toggleMode, toggleSettingsPanel } from '../actions';
 import Utility from '../util/utility';
-
 const TimerWorker = require('worker!./webworker.js');
 
 let App = React.createClass({
@@ -31,6 +30,7 @@ let App = React.createClass({
 					break;
 				case 'COMPLETE':
 					if(this.props.mode === 'work') {
+						this.props.stopTimer();
 						this.props.setTime(this.props.default.break);
 						this.playTimer();
 					} else {
@@ -81,23 +81,17 @@ let App = React.createClass({
 	},
 
 	resetTimer: function() {
-		console.log('reset timer');
-
 		this.pauseTimer();
 		this.props.setTime(this.props.default.work);
 	},
 
 	toggleSettings: function() {
-		console.log('toggle settings');
 		this.props.toggleSettingsPanel();
 	},
 
 	render: function() {
-		const styleObj = {
-			backgroundColor: this.props.mode === 'break' ? 'lightpink' : 'white'
-		};
 		return (
-			<div style={styleObj}>
+			<div>
 				<TimeContainer />
 				<TimerLabels
 					handlePlayClick={this.handlePlayClick}
@@ -107,10 +101,8 @@ let App = React.createClass({
 				/>
 				<SettingsContainer />
 				<Footer />
+				<GiphyContainer mode={this.props.mode} />
 				<NotificationContainer />
-				<GiphyContainer
-					mode={this.props.mode}
-				/>
 			</div>
 		);
 	}

@@ -9,9 +9,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispath) => ({});
-
 export const TimeContainer = connect(
-	mapStateToProps,
-	mapDispatchToProps
+	mapStateToProps
 )(Time);

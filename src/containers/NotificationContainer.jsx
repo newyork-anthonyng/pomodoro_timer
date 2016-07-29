@@ -10,11 +10,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {};
-};
-
 export const NotificationContainer = connect(
-	mapStateToProps,
-	mapDispatchToProps
+	mapStateToProps
 )(Notification);

@@ -5,7 +5,7 @@ export function Giphy(props) {
 
 	return (
 		<div id="giphy">
-			<img src={src} />
+			<img src={src} alt="Giphy - Party Time!" />
 		</div>
 	);
 }

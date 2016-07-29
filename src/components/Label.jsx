@@ -5,9 +5,7 @@ export function Label(props) {
 
 	return (
 		<div className="label">
-			<p
-				onClick={handleClick}
-			>
+			<p onClick={handleClick}>
 				{props.children}
 			</p>
 		</div>

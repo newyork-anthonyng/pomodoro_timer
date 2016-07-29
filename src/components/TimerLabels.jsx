@@ -6,19 +6,13 @@ export function TimerLabels(props) {
 
 	return (
 		<div id="actions">
-			<Label
-				handleClick={handlePlayClick}
-			>
+			<Label handleClick={handlePlayClick}>
 				{ isRunning ? 'Pause' : 'Play' }
 			</Label>
-			<Label
-				handleClick={handleResetClick}
-			>
+			<Label handleClick={handleResetClick}>
 				Reset
 			</Label>
-			<Label
-				handleClick={handleSettingsClick}
-			>
+			<Label handleClick={handleSettingsClick}>
 				Settings
 			</Label>
 		</div>
