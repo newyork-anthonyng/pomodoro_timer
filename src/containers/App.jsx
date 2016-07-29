@@ -4,7 +4,7 @@ import { TimeContainer } from './TimeContainer';
 import { TimerLabels } from '../components/TimerLabels';
 import { SettingsContainer } from './SettingsContainer';
 import { Footer } from '../components/Footer';
-import { startTimer, setTime, stopTimer, toggleSettingsPanel } from '../actions';
+import { startTimer, setTime, stopTimer, toggleMode, toggleSettingsPanel } from '../actions';
 import Utility from '../utility';
 
 const TimerWorker = require('worker!./webworker.js');
@@ -25,6 +25,16 @@ let App = React.createClass({
 			switch(e.data.action) {
 				case 'TICK':
 					this.props.setTime(e.data.time);
+					break;
+				case 'COMPLETE':
+					if(this.props.mode === 'work') {
+						this.props.setTime(this.props.default.break);
+						this.playTimer();
+					} else {
+						this.props.setTime(this.props.default.work);
+					}
+
+					this.props.toggleMode();
 					break;
 			}
 		});
@@ -68,8 +78,11 @@ let App = React.createClass({
 	},
 
 	render: function() {
+		const styleObj = {
+			backgroundColor: this.props.mode === 'break' ? 'lightpink' : 'white'
+		};
 		return (
-			<div>
+			<div style={styleObj}>
 				<TimeContainer />
 				<TimerLabels
 					handlePlayClick={this.handlePlayClick}
@@ -98,6 +111,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		stopTimer: () => {
 			dispatch(stopTimer());
+		},
+		toggleMode: () => {
+			dispatch(toggleMode());
 		},
 		toggleSettingsPanel: () => {
 			dispatch(toggleSettingsPanel());

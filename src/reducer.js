@@ -1,4 +1,11 @@
-import { START_TIMER, STOP_TIMER, SET_TIME, UPDATE_SETTINGS, TOGGLE_SETTINGS_PANEL } from './actions';
+import {
+	START_TIMER,
+	STOP_TIMER,
+	SET_TIME,
+	UPDATE_SETTINGS,
+	TOGGLE_MODE,
+	TOGGLE_SETTINGS_PANEL
+} from './actions';
 
 const DEFAULT_WORK_SETTING = 25 * 60;
 const DEFAULT_BREAK_SETTING = 5 * 60;
@@ -36,6 +43,12 @@ export default function(state = initialData, action) {
 			const newSettings = Object.assign({}, state.default, action.settings);
 			return Object.assign({}, state, {
 				default: newSettings
+			});
+		case TOGGLE_MODE:
+			console.log('toggling_mode');
+			const newMode = state.mode === 'work' ? 'break' : 'work';
+			return Object.assign({}, state, {
+				mode: newMode
 			});
 		case TOGGLE_SETTINGS_PANEL:
 			console.log('toggle settings panel');
