@@ -5,6 +5,9 @@ export function Footer() {
 		<footer>
 			<p>
 				Pomodoro Timer
+				<a href="https://github.com/newyork-anthonyng/pomodoro_timer">
+					<img src="./assets/github.png" alt="Github" />
+				</a>
 			</p>
 		</footer>
 	);

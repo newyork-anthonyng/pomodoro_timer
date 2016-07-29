@@ -50,3 +50,11 @@ footer {
 	position: absolute;
 	bottom: 21px;
 }
+
+footer img {
+	height: 32px;
+	padding-left: 12px;
+	position: relative;
+	top: 3px;
+	width: 32px;
+}
