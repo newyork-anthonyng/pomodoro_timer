@@ -11,8 +11,9 @@ import Utility from '../utility';
 const TimerWorker = require('worker!./webworker.js');
 
 let App = React.createClass({
-	componentWillMount: function() {
+	componentDidMount: function() {
 		this.setWorker();
+		this.setKeyboardShortcut();
 	},
 
 	componentDidUpdate: function() {
@@ -38,6 +39,18 @@ let App = React.createClass({
 					this.props.toggleMode();
 					break;
 			}
+		});
+	},
+
+	setKeyboardShortcut: function() {
+		const SPACE_KEY = 32;
+		const R_KEY = 82;
+		const S_KEY = 83;
+
+		window.addEventListener('keydown', (e) => {
+			if(e.keyCode === SPACE_KEY) this.handlePlayClick();
+			if(e.keyCode === R_KEY) this.resetTimer();
+			if(e.keyCode === S_KEY) this.toggleSettings();
 		});
 	},
 
