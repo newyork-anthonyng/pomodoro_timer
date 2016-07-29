@@ -5,12 +5,17 @@ import { TimerLabels } from '../components/TimerLabels';
 import { SettingsContainer } from './SettingsContainer';
 import { Footer } from '../components/Footer';
 import { startTimer, setTime, stopTimer, toggleSettingsPanel } from '../actions';
+import Utility from '../utility';
 
 const TimerWorker = require('worker!./webworker.js');
 
 let App = React.createClass({
 	componentWillMount: function() {
 		this.setWorker();
+	},
+
+	componentDidUpdate: function() {
+		document.title = Utility.formatTime(this.props.seconds);
 	},
 
 	setWorker: function() {
