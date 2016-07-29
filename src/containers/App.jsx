@@ -4,6 +4,7 @@ import { TimeContainer } from './TimeContainer';
 import { TimerLabels } from '../components/TimerLabels';
 import { SettingsContainer } from './SettingsContainer';
 import { Footer } from '../components/Footer';
+import { NotificationContainer } from './NotificationContainer';
 import { startTimer, setTime, stopTimer, toggleMode, toggleSettingsPanel } from '../actions';
 import Utility from '../utility';
 
@@ -92,6 +93,7 @@ let App = React.createClass({
 				/>
 				<SettingsContainer />
 				<Footer />
+				<NotificationContainer />
 			</div>
 		);
 	}
