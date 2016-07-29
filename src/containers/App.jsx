@@ -52,6 +52,9 @@ let App = React.createClass({
 
 	resetTimer: function() {
 		console.log('reset timer');
+
+		this.pauseTimer();
+		this.props.setTime(this.props.default.work);
 	},
 
 	toggleSettings: function() {
