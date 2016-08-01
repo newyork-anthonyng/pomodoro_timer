@@ -29,8 +29,9 @@ let App = React.createClass({
 					this.props.setTime(e.data.time);
 					break;
 				case 'COMPLETE':
+					this.props.stopTimer();
+
 					if(this.props.mode === 'work') {
-						this.props.stopTimer();
 						this.props.setTime(this.props.default.break);
 						this.playTimer();
 					} else {

@@ -23044,8 +23044,9 @@
 						_this.props.setTime(e.data.time);
 						break;
 					case 'COMPLETE':
+						_this.props.stopTimer();
+
 						if (_this.props.mode === 'work') {
-							_this.props.stopTimer();
 							_this.props.setTime(_this.props.default.break);
 							_this.playTimer();
 						} else {
