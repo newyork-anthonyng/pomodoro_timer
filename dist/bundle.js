@@ -25031,7 +25031,22 @@
 		},
 
 		render: function render() {
-			return null;
+			var audioSource = this.props.audioSource;
+
+
+			if (audioSource) {
+				var audioStyle = {
+					display: 'none'
+				};
+
+				return _react2.default.createElement(
+					'audio',
+					{ style: audioStyle },
+					_react2.default.createElement('source', { src: audioSource })
+				);
+			} else {
+				return null;
+			}
 		}
 	});
 

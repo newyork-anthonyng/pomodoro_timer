@@ -16,7 +16,21 @@ const Notification = React.createClass({
 	},
 
 	render: function() {
-		return null;
+		const { audioSource } = this.props;
+
+		if(audioSource) {
+			const audioStyle = {
+				display: 'none'
+			};
+
+			return (
+				<audio style={audioStyle}>
+					<source src={audioSource} />
+				</audio>
+			);
+		} else {
+			return null;
+		}
 	}
 });
 
