@@ -19,4 +19,5 @@ s | Open up Settings popup
 HTML/CSS, Express, Node, Notifications, Web Workers, Giphy API
 
 ### Wireframes
-![Wireframe](./public/assets/Wireframes.png)
+![Wireframe1](./wireframes/Desktop_1.png)
+![Wireframe2](./wireframes/Desktop_2.png)
