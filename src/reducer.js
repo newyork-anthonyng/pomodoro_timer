@@ -4,7 +4,8 @@ import {
 	SET_TIME,
 	UPDATE_SETTINGS,
 	TOGGLE_MODE,
-	TOGGLE_SETTINGS_PANEL
+	TOGGLE_SETTINGS_PANEL,
+	TOGGLE_SOUND
 } from './actions';
 
 const DEFAULT_WORK_SETTING = 25 * 60;
@@ -18,7 +19,8 @@ const initialData = {
 	default: {
 		work: DEFAULT_WORK_SETTING,
 		break: DEFAULT_BREAK_SETTING
-	}
+	},
+	sound: true
 };
 
 export default function(state = initialData, action) {
@@ -46,9 +48,12 @@ export default function(state = initialData, action) {
 				mode: newMode
 			});
 		case TOGGLE_SETTINGS_PANEL:
-			console.log(state.settingsPanelOpen);
 			return Object.assign({}, state, {
 				settingsPanelOpen: !state.settingsPanelOpen
+			});
+		case TOGGLE_SOUND:
+			return Object.assign({}, state, {
+				sound: !state.sound
 			});
 		default:
 			return state;

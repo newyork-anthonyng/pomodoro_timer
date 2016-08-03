@@ -22896,9 +22896,12 @@
 					mode: newMode
 				});
 			case _actions.TOGGLE_SETTINGS_PANEL:
-				console.log(state.settingsPanelOpen);
 				return Object.assign({}, state, {
 					settingsPanelOpen: !state.settingsPanelOpen
+				});
+			case _actions.TOGGLE_SOUND:
+				return Object.assign({}, state, {
+					sound: !state.sound
 				});
 			default:
 				return state;
@@ -22918,7 +22921,8 @@
 		default: {
 			work: DEFAULT_WORK_SETTING,
 			break: DEFAULT_BREAK_SETTING
-		}
+		},
+		sound: true
 	};
 
 	;
@@ -22938,12 +22942,14 @@
 	exports.updateSettings = updateSettings;
 	exports.toggleMode = toggleMode;
 	exports.toggleSettingsPanel = toggleSettingsPanel;
+	exports.toggleSound = toggleSound;
 	var START_TIMER = exports.START_TIMER = 'START_TIMER';
 	var STOP_TIMER = exports.STOP_TIMER = 'STOP_TIMER';
 	var SET_TIME = exports.SET_TIME = 'SET_TIME';
 	var UPDATE_SETTINGS = exports.UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 	var TOGGLE_MODE = exports.TOGGLE_MODE = 'TOGGLE_MODE';
 	var TOGGLE_SETTINGS_PANEL = exports.TOGGLE_SETTINGS_PANEL = 'TOGGLE_SETTINGS_PANEL';
+	var TOGGLE_SOUND = exports.TOGGLE_SOUND = 'TOGGLE_SOUND';
 
 	function startTimer() {
 		return {
@@ -22983,6 +22989,12 @@
 		};
 	};
 
+	function toggleSound() {
+		return {
+			type: TOGGLE_SOUND
+		};
+	};
+
 /***/ },
 /* 202 */
 /***/ function(module, exports, __webpack_require__) {
@@ -23004,6 +23016,8 @@
 	var _TimerLabels = __webpack_require__(206);
 
 	var _SettingsContainer = __webpack_require__(208);
+
+	var _SoundLabelContainer = __webpack_require__(240);
 
 	var _Footer = __webpack_require__(211);
 
@@ -23119,6 +23133,10 @@
 					isRunning: this.props.isRunning
 				}),
 				_react2.default.createElement(_SettingsContainer.SettingsContainer, null),
+				_react2.default.createElement(_SoundLabelContainer.SoundLabelContainer, {
+					sound: this.props.sound,
+					handleClick: this.props.toggleSound
+				}),
 				_react2.default.createElement(_Footer.Footer, null),
 				_react2.default.createElement(_GiphyContainer.GiphyContainer, { mode: this.props.mode }),
 				_react2.default.createElement(_NotificationContainer.NotificationContainer, null)
@@ -23146,6 +23164,9 @@
 			},
 			toggleSettingsPanel: function toggleSettingsPanel() {
 				dispatch((0, _actions.toggleSettingsPanel)());
+			},
+			toggleSound: function toggleSound() {
+				dispatch((0, _actions.toggleSound)());
 			}
 		};
 	};
@@ -24988,7 +25009,8 @@
 		return {
 			mode: state.mode,
 			title: state.mode === 'break' ? 'Take a break!' : 'Back to work!',
-			audioSource: state.mode === 'break' ? 'assets/break.mp3' : 'assets/beep.wav'
+			audioSource: state.mode === 'break' ? 'assets/break.mp3' : 'assets/beep.wav',
+			sound: state.sound
 		};
 	};
 
@@ -25021,13 +25043,16 @@
 			var _props = this.props;
 			var title = _props.title;
 			var audioSource = _props.audioSource;
+			var sound = _props.sound;
 
 
 			var notification = new window.Notification(title);
 			setTimeout(notification.close.bind(notification), 2500);
 
-			var audio = new Audio(audioSource);
-			audio.play();
+			if (sound) {
+				var audio = new Audio(audioSource);
+				audio.play();
+			}
 		},
 
 		render: function render() {
@@ -25059,6 +25084,51 @@
 	module.exports = function() {
 		return new Worker(__webpack_require__.p + "fe2b03cd3cc87cdab5e9.worker.js");
 	};
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.SoundLabelContainer = undefined;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Label = __webpack_require__(207);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SoundLabelContainer = _react2.default.createClass({
+		displayName: 'SoundLabelContainer',
+
+		render: function render() {
+			var _props = this.props;
+			var sound = _props.sound;
+			var handleClick = _props.handleClick;
+
+			var className = sound ? 'toggle-sound active' : 'toggle-sound';
+
+			return _react2.default.createElement(
+				'div',
+				{ className: className },
+				_react2.default.createElement(
+					_Label.Label,
+					{ handleClick: handleClick },
+					String.fromCharCode(9833),
+					' Sound ',
+					sound ? 'on' : 'off'
+				)
+			);
+		}
+	});
+
+	exports.SoundLabelContainer = SoundLabelContainer;
 
 /***/ }
 /******/ ]);

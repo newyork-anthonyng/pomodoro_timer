@@ -6,13 +6,15 @@ const Notification = React.createClass({
 	},
 
 	componentDidUpdate: function() {
-		const { title, audioSource } = this.props;
+		const { title, audioSource, sound } = this.props;
 
 		let notification = new window.Notification(title);
 		setTimeout(notification.close.bind(notification), 2500);
 
-		const audio = new Audio(audioSource);
-		audio.play();
+		if(sound) {
+			const audio = new Audio(audioSource);
+			audio.play();
+		}
 	},
 
 	render: function() {

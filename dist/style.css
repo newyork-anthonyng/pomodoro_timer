@@ -45,6 +45,18 @@
 	top: -5px;
 }
 
+.toggle-sound {
+	color: #333;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 21px;
+	opacity: 0.2;
+}
+
+.toggle-sound.active {
+	opacity: 1;
+}
+
 footer {
 	font-size: 37px;
 	min-width: 360px;

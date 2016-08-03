@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { TimeContainer } from './TimeContainer';
 import { TimerLabels } from '../components/TimerLabels';
 import { SettingsContainer } from './SettingsContainer';
+import { SoundLabelContainer } from './SoundLabelContainer';
 import { Footer } from '../components/Footer';
 import { GiphyContainer } from './GiphyContainer';
 import { NotificationContainer } from './NotificationContainer';
-import { startTimer, setTime, stopTimer, toggleMode, toggleSettingsPanel } from '../actions';
+import { startTimer, setTime, stopTimer, toggleMode, toggleSettingsPanel, toggleSound } from '../actions';
 import Utility from '../util/utility';
 const TimerWorker = require('worker!./webworker.js');
 
@@ -101,6 +102,10 @@ let App = React.createClass({
 					isRunning={this.props.isRunning}
 				/>
 				<SettingsContainer />
+				<SoundLabelContainer
+					sound={this.props.sound}
+					handleClick={this.props.toggleSound}
+				/>
 				<Footer />
 				<GiphyContainer mode={this.props.mode} />
 				<NotificationContainer />
@@ -129,6 +134,9 @@ const mapDispatchToProps = (dispatch) => {
 		},
 		toggleSettingsPanel: () => {
 			dispatch(toggleSettingsPanel());
+		},
+		toggleSound: () => {
+			dispatch(toggleSound());
 		}
 	};
 };
