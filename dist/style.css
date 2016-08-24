@@ -51,6 +51,7 @@
 	font-size: 16px;
 	margin-top: 21px;
 	opacity: 0.2;
+	transition: opacity 0.1s ease-in-out;
 }
 
 .toggle-sound.active {
