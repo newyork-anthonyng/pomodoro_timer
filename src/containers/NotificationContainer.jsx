@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
 		mode: state.mode,
 		title: state.mode === 'break' ? 'Take a break!' : 'Back to work!',
 		audioSource: state.mode === 'break' ? 'assets/break.mp3' : 'assets/beep.wav',
-		sound: state.sound
+		sound: state.sound,
+		image: 'http://www.pomodororossonyc.com/wp-content/uploads/2014/06/photodune-680322-tomato-xs.jpg'
 	};
 };
 

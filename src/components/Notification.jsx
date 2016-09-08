@@ -21,7 +21,10 @@ const Notification = React.createClass({
 	createNotification: function() {
 		const { title } = this.props;
 
-		let notification = new window.Notification(title);
+		const notificationOptions = {
+			icon: this.props.image
+		};
+		const notification = new window.Notification(title, notificationOptions);
 		setTimeout(notification.close.bind(notification), 2500);
 	},
 
