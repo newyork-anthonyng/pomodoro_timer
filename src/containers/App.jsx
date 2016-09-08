@@ -15,6 +15,7 @@ let App = React.createClass({
 	componentDidMount: function() {
 		this.setWorker();
 		this.setKeyboardShortcut();
+		this.setNotifications();
 	},
 
 	componentDidUpdate: function() {
@@ -55,6 +56,15 @@ let App = React.createClass({
 			if(e.keyCode === R_KEY) this.resetTimer();
 			if(e.keyCode === S_KEY) this.toggleSettings();
 		});
+	},
+
+	setNotifications: function() {
+		if('Notification' in window) {
+			const permission = Notification.permission;
+			if(permission !== 'denied' || Notification.permission === 'default') {
+				Notification.requestPermission();
+			}
+		}
 	},
 
 	handlePlayClick: function() {
