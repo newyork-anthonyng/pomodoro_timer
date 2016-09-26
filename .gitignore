@@ -5,3 +5,5 @@ public/.DS_Store
 public/.sass-cache
 public/assets/.DS_Store
 public/assets/images/.DS_Store
+dist/bundle.js
+dist/bundle.min.js
