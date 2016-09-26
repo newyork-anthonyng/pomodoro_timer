@@ -1,11 +1,21 @@
 import React from 'react';
 
 const Notification = React.createClass({
-	shouldComponentUpdate: function(nextProps) {
-		return nextProps.mode !== this.props.mode;
+	componentWillMount: function() {
+		this.audio = null;
 	},
 
-	componentDidUpdate: function() {
+	componentDidUpdate: function(prevProps) {
+		if(prevProps.mode !== this.props.mode) {
+			return this.playNotifications();
+		}
+
+		if(prevProps.sound !== this.props.sound) {
+			this.audio.pause();
+		}
+	},
+
+	playNotifications: function() {
 		const { audioSource, sound } = this.props;
 
 		for(let i = 0; i < 3; i++) {
@@ -13,8 +23,8 @@ const Notification = React.createClass({
 		}
 
 		if(sound) {
-			const audio = new Audio(audioSource);
-			audio.play();
+			this.audio = new Audio(audioSource);
+			this.audio.play();
 		}
 	},
 
@@ -29,21 +39,7 @@ const Notification = React.createClass({
 	},
 
 	render: function() {
-		const { audioSource } = this.props;
-
-		if(audioSource) {
-			const audioStyle = {
-				display: 'none'
-			};
-
-			return (
-				<audio style={audioStyle}>
-					<source src={audioSource} />
-				</audio>
-			);
-		} else {
-			return null;
-		}
+		return null;
 	}
 });
 
