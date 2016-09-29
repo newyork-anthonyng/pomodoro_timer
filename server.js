@@ -5,7 +5,9 @@ const app = express();
 const path = require('path');
 const logger = require('morgan');
 const request = require('request');
+const compression = require('compression');
 
+app.use(compression());
 app.use(express.static('dist'));
 app.use(logger('dev'));
 
