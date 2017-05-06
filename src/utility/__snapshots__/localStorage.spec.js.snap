@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`localStorage.get should get items from localStorage 1`] = `
+Array [
+  "pomodoro_timer",
+]
+`;
+
+exports[`localStorage.get should get items from localStorage 2`] = `
+Array [
+  Object {
+    "foo": "bar",
+  },
+]
+`;
+
+exports[`localStorage.get should return empty array if there is an error 1`] = `Array []`;
+
+exports[`localStorage.updateTasks should set items in localStorage 1`] = `
+Array [
+  "pomodoro_timer",
+  "[{\\"foo\\":\\"bar\\"}]",
+]
+`;

@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Task delete should update the local storage 1`] = `
+Array [
+  Object {
+    "id": "apple1",
+    "text": "Ate an apple",
+    "title": "Apples",
+  },
+]
+`;
+
+exports[`Task inputs should add task in correct order 1`] = `
+Array [
+  Object {
+    "id": "4",
+    "text": "pomodoro is awesome",
+    "title": "3",
+  },
+  Object {
+    "id": "apple1",
+    "text": "Ate an apple",
+    "title": "Apples",
+  },
+  Object {
+    "id": "banana2",
+    "text": "Ate a banana",
+    "title": "Bananas",
+  },
+]
+`;
+
+exports[`Task inputs should add task when clicking on button 1`] = `
+Array [
+  Object {
+    "id": "1",
+    "text": "pomodoro is awesome",
+    "title": "1",
+  },
+]
+`;
+
+exports[`Task inputs should add task when pressing ENTER 1`] = `
+Array [
+  Object {
+    "id": "0",
+    "text": "pomodoro is awesome",
+    "title": "1",
+  },
+]
+`;
+
+exports[`WebNotifications should display correct notification when BREAK timer is completed 1`] = `
+Object {
+  "body": "Back to work",
+}
+`;
+
+exports[`WebNotifications should display correct notification when WORK timer is completed 1`] = `
+Object {
+  "body": "Take a break",
+}
+`;
+
+exports[`When clicking pause button should stop web worker 1`] = `
+Object {
+  "action": "STOP",
+}
+`;
+
+exports[`When clicking play button should start web worker 1`] = `
+Object {
+  "action": "START",
+  "time": 1500000,
+}
+`;
+
+exports[`When clicking reset button should stop web worker 1`] = `
+Object {
+  "action": "STOP",
+}
+`;

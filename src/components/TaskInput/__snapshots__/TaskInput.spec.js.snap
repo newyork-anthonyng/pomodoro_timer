@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render 1`] = `
+<glamorous(div)>
+  <glamorous(textarea)
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    value="Learn Marko"
+  />
+  <button
+    onClick={[Function]}
+  >
+    ✓
+  </button>
+</glamorous(div)>
+`;
