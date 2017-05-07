@@ -1,7 +1,7 @@
 module.exports = {
   scripts: {
     default: {
-      script: 'webpack-dev-server --progress --inline --hot',
+      script: 'webpack-dev-server --progress --inline --hot --content-base dist/',
       description: 'Run webpack-dev-server with Hot Module Reloading 🔥',
     },
     build: {
