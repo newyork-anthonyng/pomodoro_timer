@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import TimerApp from '../TimerApp';
 import TimerWorker from '../../utility/webworkerWrapper';
 import WebNotifications from '../WebNotifications';
+import Title from '../Title';
 import uuid from '../../utility/uuid';
+import timeFormatter from '../../utility/timeFormatter';
 import localStorage from '../../utility/localStorage';
 
 class App extends Component {
@@ -145,6 +147,8 @@ class App extends Component {
 
     return (
       <div>
+        <Title text={timeFormatter(this.state.timeInMs)} />
+
         <TimerApp
           onPlayClick={this.handlePlayClick}
           onPauseClick={this.handlePauseClick}
