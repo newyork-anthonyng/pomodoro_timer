@@ -12,9 +12,9 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel-loader',
       include: __dirname,
-      query: {
-        presets: ['es2015', 'react'],
-      },
+      // query: {
+      //   presets: ['es2015', 'react', 'transform-react-remove-prop-types'],
+      // },
     }],
   },
   plugins:[

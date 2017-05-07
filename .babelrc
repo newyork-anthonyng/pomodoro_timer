@@ -1,3 +1,13 @@
 {
-	"presets": ["es2015", "react"]
+	"presets": ["es2015", "react"],
+	"env": {
+		"production": {
+			"comments": false,
+			"plugins": [
+				"transform-react-remove-prop-types",
+				"transform-react-constant-elements",
+				"transform-react-inline-elements",
+			]
+		}
+	}
 }
