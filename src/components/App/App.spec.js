@@ -134,6 +134,18 @@ describe('When clicking reset button', () => {
     expect(webworker.postMessage).toHaveBeenCalledTimes(1);
     expect(webworker.postMessage.mock.calls[0][0]).toMatchSnapshot();
   });
+
+  it('should set mode to WORK', () => {
+    const wrapper = mount(<App />);
+    wrapper.setState({
+      isWorking: false,
+    });
+
+    const resetButton = wrapper.find('button').at(1);
+    resetButton.simulate('click');
+
+    expect(wrapper.state().isWorking).toBeTruthy();
+  });
 });
 
 describe('TimerWorker messages', () => {
@@ -269,16 +281,6 @@ describe('Task inputs', () => {
     expect(textArea.props().value).toEqual(newText);
   });
 
-  it('should add task when pressing ENTER', () => {
-    const wrapper = mount(<App />);
-
-    const textArea = wrapper.find('textarea');
-    textArea.simulate('change', { target: { value: 'pomodoro is awesome' } });
-    textArea.simulate('keypress', { key: 'Enter' });
-
-    expect(wrapper.find(TimerApp).props().tasks).toMatchSnapshot();
-  });
-
   it('should add task when clicking on button', () => {
     const wrapper = mount(<App />);
 
@@ -305,7 +307,8 @@ describe('Task inputs', () => {
 
     const textArea = wrapper.find('textarea');
     textArea.simulate('change', { target: { value: 'pomodoro is awesome' } });
-    textArea.simulate('keypress', { key: 'Enter' });
+    const button = wrapper.find(TaskInput).find('button');
+    button.simulate('click');
 
     expect(textArea.props().value).toEqual('');
   });
@@ -317,7 +320,8 @@ describe('Task inputs', () => {
 
     const textArea = wrapper.find('textarea');
     textArea.simulate('change', { target: { value: 'pomodoro is awesome' } });
-    textArea.simulate('keypress', { key: 'Enter' });
+    const button = wrapper.find(TaskInput).find('button');
+    button.simulate('click');
 
     expect(localStorage.set).toHaveBeenCalledTimes(1);
   });
@@ -332,7 +336,8 @@ describe('Task inputs', () => {
 
     const textArea = wrapper.find('textarea');
     textArea.simulate('change', { target: { value: 'pomodoro is awesome' } });
-    textArea.simulate('keypress', { key: 'Enter' });
+    const button = wrapper.find(TaskInput).find('button');
+    button.simulate('click');
 
     expect(wrapper.find(TimerApp).props().tasks).toMatchSnapshot();
   });

@@ -4,7 +4,6 @@ exports[`should render 1`] = `
 <glamorous(div)>
   <glamorous(textarea)
     onChange={[Function]}
-    onKeyPress={[Function]}
     value="Learn Marko"
   />
   <button

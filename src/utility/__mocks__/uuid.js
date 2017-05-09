@@ -1,8 +1,6 @@
 const uuid = (function() {
-  let counter = 0;
-
   return function() {
-    return counter++;
+    return 42;
   };
 })();
 

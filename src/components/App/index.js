@@ -99,6 +99,7 @@ class App extends Component {
     this.setState({
       timerIsActive: false,
       timeInMs: this.WORK_TIME,
+      isWorking: true,
     });
   }
 

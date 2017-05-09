@@ -13,34 +13,15 @@ const Textarea = glamorous.textarea({
   width: '250px',
 });
 
-class TaskInput extends PureComponent {
-  constructor() {
-    super();
-
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-
-  handleKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.props.onSubmit();
-    }
-  }
-
-  render() {
-    const { value, onChange, onSubmit } = this.props;
-
-    return (
-      <Container>
-        <Textarea
-          value={value}
-          onChange={onChange}
-          onKeyPress={this.handleKeyPress}
-        />
-        <button onClick={onSubmit}>✓</button>
-      </Container>
-    );
-  }
-}
+const TaskInput = ({ value, onChange, onSubmit }) => (
+  <Container>
+    <Textarea
+      value={value}
+      onChange={onChange}
+    />
+    <button onClick={onSubmit}>✓</button>
+  </Container>
+);
 
 TaskInput.defaultProps = {
   onSubmit: noop,

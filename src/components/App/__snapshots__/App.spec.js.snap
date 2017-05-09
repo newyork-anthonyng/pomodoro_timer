@@ -13,7 +13,7 @@ Array [
 exports[`Task inputs should add task in correct order 1`] = `
 Array [
   Object {
-    "id": "4",
+    "id": "42",
     "text": "pomodoro is awesome",
     "title": "3",
   },
@@ -33,17 +33,7 @@ Array [
 exports[`Task inputs should add task when clicking on button 1`] = `
 Array [
   Object {
-    "id": "1",
-    "text": "pomodoro is awesome",
-    "title": "1",
-  },
-]
-`;
-
-exports[`Task inputs should add task when pressing ENTER 1`] = `
-Array [
-  Object {
-    "id": "0",
+    "id": "42",
     "text": "pomodoro is awesome",
     "title": "1",
   },

@@ -33,34 +33,6 @@ it('should run callback when typing in textarea', () => {
   expect(cb.mock.calls[0][0].target.value).toEqual(newText);
 });
 
-it('should run callback when pressing ENTER key', () => {
-  const cb = jest.fn();
-  const wrapper = mount(
-    <TaskInput
-      {...defaultProps}
-      onSubmit={cb}
-    />
-  );
-  const textarea = wrapper.find('textarea');
-  textarea.simulate('keypress', { key: 'Enter' });
-
-  expect(cb).toHaveBeenCalledTimes(1);
-});
-
-it('should not run callback when pressing keys other than ENTER key', () => {
-  const cb = jest.fn();
-  const wrapper = mount(
-    <TaskInput
-      {...defaultProps}
-      onSubmit={cb}
-    />
-  );
-  const textarea = wrapper.find('textarea');
-  textarea.simulate('keypress', { key: 'A' });
-
-  expect(cb).not.toHaveBeenCalled();
-});
-
 it('should run callback when clicking on button', () => {
   const cb = jest.fn();
   const wrapper = shallow(
