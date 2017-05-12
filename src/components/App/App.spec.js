@@ -401,3 +401,81 @@ describe('Clear all tasks', () => {
     expect(localStorage.set.mock.calls[0][0]).toMatchSnapshot();
   });
 });
+
+describe('Keyboard shortcuts', () => {
+  let map;
+
+  beforeEach(() => {
+    map = {};
+
+    document.addEventListener = jest.fn((event, cb) => {
+      map[event] = cb;
+    });
+  });
+
+  it('should add keypress event listener on mount', () => {
+    mount(<App />);
+
+    expect(document.addEventListener).toHaveBeenCalledTimes(1);
+    expect(map.keypress).toBeDefined();
+  });
+
+  it('should PLAY when pressing ctrl + q and timer is not active', () => {
+    const wrapper = mount(<App />);
+    wrapper.setState({ timerIsActive: false });
+    wrapper.instance().handlePlayClick = jest.fn();
+
+    map.keypress({
+      key: 'q',
+      ctrlKey: true,
+    });
+
+    expect(wrapper.instance().handlePlayClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('should PAUSE when pressing ctrl + q and timer is active', () => {
+    const wrapper = mount(<App />);
+    wrapper.setState({ timerIsActive: true });
+    wrapper.instance().handlePauseClick = jest.fn();
+
+    map.keypress({
+      key: 'q',
+      ctrlKey: true,
+    });
+
+    expect(wrapper.instance().handlePauseClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('should RESET when pressing ctrl + R', () => {
+    const wrapper = mount(<App />);
+    wrapper.instance().handleResetClick = jest.fn();
+
+    map.keypress({
+      key: 'r',
+      ctrlKey: true,
+    });
+
+    expect(wrapper.instance().handleResetClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('should submit task when pressing ctrl + ENTER', () => {
+    const wrapper = mount(<App />);
+    wrapper.instance().handleTaskSubmit = jest.fn();
+
+    map.keypress({
+      key: 'Enter',
+      ctrlKey: true,
+    });
+
+    expect(wrapper.instance().handleTaskSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  it('should do nothing if ctrl key is not pressed', () => {
+    const wrapper = mount(<App />);
+    wrapper.instance().handlePauseClick = jest.fn();
+
+    map.keypress({ key: 'q' });
+
+    expect(wrapper.instance().handlePauseClick).not.toHaveBeenCalled();
+  });
+});

@@ -24,6 +24,7 @@ class App extends Component {
 
     this.createWorker = this.createWorker.bind(this);
     this.fetchTasks = this.fetchTasks.bind(this);
+    this.handleKeyboardShortcuts = this.handleKeyboardShortcuts.bind(this);
     this.handlePlayClick = this.handlePlayClick.bind(this);
     this.handlePauseClick = this.handlePauseClick.bind(this);
     this.handleResetClick = this.handleResetClick.bind(this);
@@ -36,6 +37,8 @@ class App extends Component {
   componentDidMount() {
     this.createWorker();
     this.fetchTasks();
+
+    document.addEventListener('keypress', this.handleKeyboardShortcuts);
   }
 
   createWorker() {
@@ -59,10 +62,28 @@ class App extends Component {
           }
         });
         break;
-      default:
-        break;
       }
     };
+  }
+
+  handleKeyboardShortcuts(e) {
+    if (!e.ctrlKey) return;
+
+    switch (e.key) {
+    case 'q':
+      if (this.state.timerIsActive) {
+        this.handlePauseClick();
+      } else {
+        this.handlePlayClick();
+      }
+      break;
+    case 'r':
+      this.handleResetClick();
+      break;
+    case 'Enter':
+      this.handleTaskSubmit();
+      break;
+    }
   }
 
   fetchTasks() {

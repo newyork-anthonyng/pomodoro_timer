@@ -4,7 +4,7 @@ const concurrent = npsUtils.concurrent;
 module.exports = {
   scripts: {
     default: {
-      script: 'webpack-dev-server --progress --inline --hot --content-base dist/',
+      script: 'webpack-dev-server --progress --inline --hot',
       description: 'Run webpack-dev-server with Hot Module Reloading 🔥',
     },
     commit: {
