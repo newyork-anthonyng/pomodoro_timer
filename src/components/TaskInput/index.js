@@ -8,9 +8,10 @@ const Container = glamorous.div({
 });
 const Textarea = glamorous.textarea({
   display: 'block',
+  fontSize: '16px',
   height: '100px',
   marginBottom: '10px',
-  width: '250px',
+  width: '340px',
 });
 
 const TaskInput = ({ value, onChange, onSubmit }) => (

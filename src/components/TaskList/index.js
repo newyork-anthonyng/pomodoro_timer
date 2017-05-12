@@ -6,7 +6,7 @@ import glamorous from 'glamorous';
 
 const Container = glamorous.div({
   marginTop: '40px',
-  width: '250px',
+  width: '340px',
 });
 
 const TaskList = ({ tasks, onDeleteClick }) => (

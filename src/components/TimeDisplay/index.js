@@ -4,7 +4,7 @@ import timeFormatter from '../../utility/timeFormatter';
 import glamorous from 'glamorous';
 
 const H1 = glamorous.h1({
-  fontSize: '100px',
+  fontSize: '150px',
   margin: 0,
 });
 
