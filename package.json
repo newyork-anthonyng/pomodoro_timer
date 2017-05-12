@@ -1,0 +1,59 @@
+{
+  "name": "pomodoro_timer",
+  "version": "1.0.0",
+  "description": "A simple pomodoro timer. After the time has elapsed, desktop notifications will appear and show images from the Giphy API.",
+  "main": "index.js",
+  "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.15.2",
+    "glamor": "^2.20.25",
+    "glamorous": "^3.13.3",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-plugin-transform-react-inline-elements": "^6.22.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "enzyme": "^2.8.2",
+    "enzyme-to-json": "^1.5.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "jest": "^19.0.2",
+    "nps": "^5.1.0",
+    "react-addons-test-utils": "^15.5.1",
+    "react-test-renderer": "^15.5.4",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5",
+    "worker-loader": "^0.8.0"
+  },
+  "scripts": {
+    "start": "nps",
+    "postinstall": "webpack --config webpack.config.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newyork-anthonyng/pomodoro_timer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/newyork-anthonyng/pomodoro_timer/issues"
+  },
+  "homepage": "https://github.com/newyork-anthonyng/pomodoro_timer#readme",
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  }
+}
