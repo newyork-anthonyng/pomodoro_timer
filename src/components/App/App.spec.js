@@ -13,6 +13,7 @@ import localStorage from '../../utility/localStorage';
 
 import TimerApp from '../TimerApp';
 import TaskInput from '../TaskInput';
+import Button from '../Button';
 import Task from '../Task';
 import App from './';
 
@@ -368,6 +369,33 @@ describe('Task delete', () => {
     const bananaTask = wrapper.find(Task).at(1);
     const deleteButton = bananaTask.find('button');
     deleteButton.simulate('click');
+
+    expect(localStorage.set).toHaveBeenCalledTimes(1);
+    expect(localStorage.set.mock.calls[0][0]).toMatchSnapshot();
+  });
+});
+
+describe('Clear all tasks', () => {
+  const tasks = [
+    { id: 'apple1', title: 'Apples', text: 'Ate an apple' },
+    { id: 'banana2', title: 'Bananas', text: 'Ate a banana' },
+  ];
+
+  it('should delete all tasks', () => {
+    const wrapper = mount(<App />);
+    wrapper.setState({ tasks });
+
+    const clearAllButton = wrapper.find(Button).at(2);
+    clearAllButton.simulate('click');
+
+    expect(wrapper.find(TimerApp).props().tasks).toEqual([]);
+  });
+
+  it('should update the local storage', () => {
+    const wrapper = mount(<App />);
+
+    const clearAllButton = wrapper.find(Button).at(2);
+    clearAllButton.simulate('click');
 
     expect(localStorage.set).toHaveBeenCalledTimes(1);
     expect(localStorage.set.mock.calls[0][0]).toMatchSnapshot();

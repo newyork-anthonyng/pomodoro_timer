@@ -21,6 +21,7 @@ const defaultProps = {
   taskInputValue: 'Learn Marko',
   onTaskSubmit: noop,
   onTaskDeleteClick: noop,
+  onClearAllClick: noop,
 };
 
 it('should render correctly when timer is active', () => {
@@ -73,6 +74,20 @@ it('should run callback when clicking on Pause button', () => {
   expect(cb.mock.calls.length).toEqual(1);
 });
 
+it('should run callback when clicking on Clear All button', () => {
+  const cb = jest.fn();
+  const wrapper = shallow(
+    <TimerApp
+      {...defaultProps}
+      onClearAllClick={cb}
+    />
+  );
+  const clearAllButton = wrapper.find(Button).at(2);
+  clearAllButton.simulate('click');
+
+  expect(cb.mock.calls.length).toEqual(1);
+});
+
 it('should pass correct props to Reset button', () => {
   const cb = jest.fn();
   const wrapper = shallow(
@@ -86,6 +101,7 @@ it('should pass correct props to Reset button', () => {
 
   expect(cb.mock.calls.length).toEqual(1);
 });
+
 
 it('should pass correct props to TaskInput', () => {
   const value = 'Run marathon';
@@ -119,3 +135,4 @@ it('should pass correct props to TaskList', () => {
   expect(taskList.props().tasks).toBe(defaultProps.tasks);
   expect(taskList.props().onDeleteClick).toBe(cb);
 });
+

@@ -30,6 +30,7 @@ class App extends Component {
     this.handleTaskInputChange = this.handleTaskInputChange.bind(this);
     this.handleTaskSubmit = this.handleTaskSubmit.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.handleClearAllClick = this.handleClearAllClick.bind(this);
   }
 
   componentDidMount() {
@@ -138,6 +139,13 @@ class App extends Component {
     localStorage.set(newTasks);
   }
 
+  handleClearAllClick() {
+    const tasks = [];
+    this.setState({ tasks });
+
+    localStorage.set(tasks);
+  }
+
   render() {
     const {
       timeInMs,
@@ -161,6 +169,7 @@ class App extends Component {
           taskInputValue={taskInputValue}
           onTaskSubmit={this.handleTaskSubmit}
           onTaskDeleteClick={this.handleDeleteClick}
+          onClearAllClick={this.handleClearAllClick}
         />
         <WebNotifications ref={(notification) => this.notification = notification} />
       </div>

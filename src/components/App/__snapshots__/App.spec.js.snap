@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Clear all tasks should update the local storage 1`] = `Array []`;
+
 exports[`Task delete should update the local storage 1`] = `
 Array [
   Object {

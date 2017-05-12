@@ -17,6 +17,7 @@ const TimerApp = ({
   taskInputValue,
   onTaskSubmit,
   onTaskDeleteClick,
+  onClearAllClick,
 }) => (
   <div>
     <TimeDisplay timeInMs={timeInMs} />
@@ -43,6 +44,11 @@ const TimerApp = ({
       onDeleteClick={onTaskDeleteClick}
     />
 
+    <Button
+      text="Clear All"
+      onClick={onClearAllClick}
+    />
+
   </div>
 );
 
@@ -53,6 +59,7 @@ TimerApp.defaultProps = {
   onTaskInputChange: noop,
   onTaskSubmit: noop,
   onTaskDeleteClick: noop,
+  onClearAllClick: noop,
 };
 
 TimerApp.propTypes = {
@@ -69,6 +76,7 @@ TimerApp.propTypes = {
   taskInputValue: T.string.isRequired,
   onTaskSubmit: T.func.isRequired,
   onTaskDeleteClick: T.func.isRequired,
+  onClearAllClick: T.func.isRequired,
 };
 
 export default TimerApp;

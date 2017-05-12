@@ -5,7 +5,9 @@ import noop from '../../utility/noop';
 import glamorous from 'glamorous';
 
 const Container = glamorous.div({
+  height: '250px',
   marginTop: '40px',
+  overflow: 'scroll',
   width: '340px',
 });
 
