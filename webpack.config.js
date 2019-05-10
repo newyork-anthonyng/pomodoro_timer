@@ -1,18 +1,23 @@
+const path = require("path");
+const HtmlPlugin = require("html-webpack-plugin");
+
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    main: path.resolve(__dirname, "src")
+  },
+
   output: {
-    path: __dirname + '/dist',
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].js"
   },
-  module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      include: __dirname,
-      query: {
-        presets: ['es2015', 'react', 'react-hmre'],
-      },
-    }],
-  },
+
+  plugins: [
+    new HtmlPlugin({
+      template: path.resolve(__dirname, "src/index.html")
+    })
+  ],
+
+  devServer: {
+    contentBase: path.resolve(__dirname, "dist")
+  }
 };
