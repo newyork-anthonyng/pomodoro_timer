@@ -2,7 +2,7 @@
   "name": "pomodoro_timer",
   "version": "1.0.0",
   "description": "",
-  "main": ".eslintrc.js",
+  "main": "src/index.js",
   "scripts": {
     "dev": "webpack-dev-server"
   },
@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/newyork-anthonyng/pomodoro_timer/issues"
   },

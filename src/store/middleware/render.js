@@ -11,7 +11,7 @@ const resetButtonElement = document.querySelector(".js-reset-button");
 const rerenderPlayButton = renderPlayButton(playButtonElement);
 const rerenderTimeElement = renderTimeElement(timeElement);
 
-export const renderMiddleware = store => next => action => {
+const renderMiddleware = store => next => action => {
   const { isPlaying: previousPlayState, time: previousTime } = store.getState();
   next(action);
   const { isPlaying: currentPlayState, time: currentTime } = store.getState();
@@ -25,3 +25,5 @@ export const renderMiddleware = store => next => action => {
     renderDocumentTitle(currentTime);
   }
 };
+
+export default renderMiddleware;

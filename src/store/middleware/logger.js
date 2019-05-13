@@ -1,4 +1,4 @@
-export const loggerMiddleware = store => next => action => {
+const loggerMiddleware = store => next => action => {
   console.group(action.type);
   console.info("dispatching", action);
 
@@ -7,3 +7,5 @@ export const loggerMiddleware = store => next => action => {
   console.log("next state", store.getState());
   console.groupEnd(action.type);
 };
+
+export default loggerMiddleware;

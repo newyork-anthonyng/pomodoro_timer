@@ -3,6 +3,7 @@ import store from "../index";
 import {
   RESET_ACTION,
   TOGGLE_ACTION,
+  SET_WORK_INTERVAL_ACTION,
   dispatchSetTimeAction,
   dispatchPauseAction
 } from "../actions";
@@ -20,7 +21,7 @@ timerWorker.onmessage = e => {
   }
 };
 
-export const webWorkerMiddleware = store => next => action => {
+const webWorkerMiddleware = store => next => action => {
   const previousPlayState = store.getState().isPlaying;
   next(action);
   const currentPlayState = store.getState().isPlaying;
@@ -29,14 +30,26 @@ export const webWorkerMiddleware = store => next => action => {
     return;
   }
 
-  if (action.type === RESET_ACTION) {
-    timerWorker.postMessage({
-      action: "STOP"
-    });
-  } else if (action.type === TOGGLE_ACTION) {
-    timerWorker.postMessage({
-      action: store.getState().isPlaying ? "START" : "STOP",
-      time: store.getState().time
-    });
+  switch (action.type) {
+    case RESET_ACTION:
+      return timerWorker.postMessage({
+        action: "STOP"
+      });
+    case TOGGLE_ACTION:
+      return timerWorker.postMessage({
+        action: store.getState().isPlaying ? "START" : "STOP",
+        time: store.getState().time
+      });
+    case SET_WORK_INTERVAL_ACTION:
+      timerWorker.postMessage({
+        action: "START",
+        time: store.getState().time
+      });
+
+      return timerWorker.postMessage({
+        action: "STOP"
+      });
   }
 };
+
+export default webWorkerMiddleware;

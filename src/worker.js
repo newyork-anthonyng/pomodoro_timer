@@ -2,6 +2,8 @@ let currentTime = 0;
 let timer = null;
 
 const startTimer = (time = 0) => {
+  stopTimer();
+
   currentTime = time;
   timer = setInterval(tick, 1000);
 };

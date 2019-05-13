@@ -1,7 +1,8 @@
 import store from "./store/index";
 import {
   dispatchResetAction,
-  dispatchTogglePlayAction
+  dispatchTogglePlayAction,
+  dispatchSetWorkIntervalAction
 } from "./store/actions";
 import {
   renderPlayButton,
@@ -9,18 +10,25 @@ import {
   renderDocumentTitle
 } from "./renderElements";
 
-const timeElement = document.querySelector(".js-timer");
-const playButtonElement = document.querySelector(".js-play-button");
-const resetButtonElement = document.querySelector(".js-reset-button");
+const $playButton = document.querySelector(".js-play-button");
+const $resetButton = document.querySelector(".js-reset-button");
+const $workIntervalButton = document.querySelector(".js-work-interval-button");
+const $breakIntervalButton = document.querySelector(".js-break-interval-button");
 
 function setupEventListeners() {
-  playButtonElement.addEventListener("click", function handlePlayButtonClick() {
+  $playButton.addEventListener("click", function handlePlayButtonClick() {
     store.dispatch(dispatchTogglePlayAction());
   });
 
-  resetButtonElement.addEventListener("click", function handleResetButtonClick() {
+  $resetButton.addEventListener("click", function handleResetButtonClick() {
     store.dispatch(dispatchResetAction());
   });
+
+  $workIntervalButton.addEventListener("click", function handleWorkIntervalButtonClick() {
+    store.dispatch(dispatchSetWorkIntervalAction());
+  });
 }
+
+console.log($workIntervalButton, $breakIntervalButton);
 
 setupEventListeners();
