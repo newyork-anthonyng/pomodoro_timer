@@ -9,10 +9,9 @@ import {
 const initialState = {
   mode: "work",
   isPlaying: false,
-  // time: 25 * 60
-  time: 2,
-  workInterval: 2,
-  breakInterval: 2
+  time: 25 * 60,
+  workInterval: 25 * 60,
+  breakInterval: 5 * 60
 };
 
 const reducerFunction = (state = initialState, action) => {

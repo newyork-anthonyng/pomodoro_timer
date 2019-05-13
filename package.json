@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server",
+    "build": "webpack",
+    "deploy": "firebase deploy"
   },
   "repository": {
     "type": "git",
