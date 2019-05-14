@@ -5,7 +5,8 @@ import {
   TOGGLE_ACTION,
   SET_WORK_INTERVAL_ACTION,
   dispatchSetTimeAction,
-  dispatchPauseAction
+  dispatchPauseAction,
+  SET_BREAK_INTERVAL_ACTION
 } from "../actions";
 
 // Time is more accurate with webworker
@@ -41,6 +42,7 @@ const webWorkerMiddleware = store => next => action => {
         time: store.getState().time
       });
     case SET_WORK_INTERVAL_ACTION:
+    case SET_BREAK_INTERVAL_ACTION:
       timerWorker.postMessage({
         action: "START",
         time: store.getState().time

@@ -2,13 +2,9 @@ import store from "./store/index";
 import {
   dispatchResetAction,
   dispatchTogglePlayAction,
-  dispatchSetWorkIntervalAction
+  dispatchSetWorkIntervalAction,
+  dispatchSetBreakIntervalAction
 } from "./store/actions";
-import {
-  renderPlayButton,
-  renderTimeElement,
-  renderDocumentTitle
-} from "./renderElements";
 
 const $playButton = document.querySelector(".js-play-button");
 const $resetButton = document.querySelector(".js-reset-button");
@@ -27,8 +23,10 @@ function setupEventListeners() {
   $workIntervalButton.addEventListener("click", function handleWorkIntervalButtonClick() {
     store.dispatch(dispatchSetWorkIntervalAction());
   });
-}
 
-console.log($workIntervalButton, $breakIntervalButton);
+  $breakIntervalButton.addEventListener("click", function handleBreakIntervalButtonClick() {
+    store.dispatch(dispatchSetBreakIntervalAction());
+  })
+}
 
 setupEventListeners();

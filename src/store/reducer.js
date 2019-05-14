@@ -3,7 +3,8 @@ import {
   TOGGLE_ACTION,
   RESET_ACTION,
   SET_TIME_ACTION,
-  SET_WORK_INTERVAL_ACTION
+  SET_WORK_INTERVAL_ACTION,
+  SET_BREAK_INTERVAL_ACTION
 } from "./actions";
 
 const initialState = {
@@ -50,7 +51,14 @@ const reducerFunction = (state = initialState, action) => {
         ...state,
         mode: "work",
         isPlaying: false,
-        time: 25 * 60
+        time: initialState.workInterval
+      };
+    case SET_BREAK_INTERVAL_ACTION:
+      return {
+        ...state,
+        mode: "break",
+        isPlaying: false,
+        time: initialState.breakInterval
       };
     default:
         return state;
