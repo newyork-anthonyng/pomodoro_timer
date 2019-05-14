@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack",
-    "deploy": "firebase deploy"
+    "deploy": "npm run build && firebase deploy"
   },
   "repository": {
     "type": "git",
