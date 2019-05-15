@@ -25,10 +25,13 @@ const reducerFunction = (state = initialState, action) => {
     case TOGGLE_ACTION:
       // restart timer when user hits "play" when timer has finished
       if (state.time === 0 && !state.isPlaying) {
+        const { workInterval, breakInterval } = initialState;
+        const newTime = state.mode === "work" ? workInterval : breakInterval;
+
         return {
           ...state,
           isPlaying: true,
-          time: 2
+          time: newTime
         };
       }
       return {
