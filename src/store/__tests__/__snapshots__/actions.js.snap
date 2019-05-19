@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dispatchPauseAction 1`] = `
+Object {
+  "type": "pause_action",
+}
+`;
+
+exports[`dispatchResetAction 1`] = `
+Object {
+  "type": "reset_action",
+}
+`;
+
+exports[`dispatchSetBreakIntervalAction 1`] = `
+Object {
+  "type": "set_break_interval_action",
+}
+`;
+
+exports[`dispatchSetTimeAction 1`] = `
+Object {
+  "data": 42,
+  "type": "set_time_action",
+}
+`;
+
+exports[`dispatchSetWorkIntervalAction 1`] = `
+Object {
+  "type": "set_work_interval_action",
+}
+`;
+
+exports[`dispatchTogglePlayAction 1`] = `
+Object {
+  "type": "toggle_action",
+}
+`;

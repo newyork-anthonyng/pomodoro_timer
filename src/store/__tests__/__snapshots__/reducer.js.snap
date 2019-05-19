@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PAUSE_ACTION should return correct state 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "work",
+  "time": 1500,
+  "workInterval": 1500,
+}
+`;
+
+exports[`RESET_ACTION should return correct state in 'break' mode 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "break",
+  "time": 300,
+  "workInterval": 1500,
+}
+`;
+
+exports[`RESET_ACTION should return correct state in 'work' mode 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "work",
+  "time": 1500,
+  "workInterval": 1500,
+}
+`;
+
+exports[`SET_BREAK_INTERVAL_ACTION should return correct state 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "break",
+  "time": 300,
+  "workInterval": 1500,
+}
+`;
+
+exports[`SET_TIME_ACTION should return correct state 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "work",
+  "time": 42,
+  "workInterval": 1500,
+}
+`;
+
+exports[`SET_WORK_INTERVAL_ACTION should return correct state 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "work",
+  "time": 1500,
+  "workInterval": 1500,
+}
+`;
+
+exports[`TOGGLE_ACTION should return correct state when timer was previously paused 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": true,
+  "mode": "work",
+  "time": 42,
+  "workInterval": 1500,
+}
+`;
+
+exports[`TOGGLE_ACTION should return correct state when timer was previously playing 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "work",
+  "time": 42,
+  "workInterval": 1500,
+}
+`;
+
+exports[`TOGGLE_ACTION when timer was complete and timer was previously paused should return correct time when in 'break' mode 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": true,
+  "mode": "break",
+  "time": 300,
+  "workInterval": 1500,
+}
+`;
+
+exports[`TOGGLE_ACTION when timer was complete and timer was previously paused should return correct time when in 'work' mode 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": true,
+  "mode": "work",
+  "time": 1500,
+  "workInterval": 1500,
+}
+`;
+
+exports[`should return initial state by default 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "work",
+  "time": 1500,
+  "workInterval": 1500,
+}
+`;

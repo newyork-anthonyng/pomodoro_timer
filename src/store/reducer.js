@@ -7,7 +7,7 @@ import {
   SET_BREAK_INTERVAL_ACTION
 } from "./actions";
 
-const initialState = {
+export const initialState = {
   mode: "work",
   isPlaying: false,
   time: 25 * 60,
@@ -15,7 +15,7 @@ const initialState = {
   breakInterval: 5 * 60
 };
 
-const reducerFunction = (state = initialState, action) => {
+const reducerFunction = (state = initialState, action = {}) => {
   switch (action.type) {
     case PAUSE_ACTION:
       return {
@@ -23,8 +23,8 @@ const reducerFunction = (state = initialState, action) => {
         isPlaying: false
       };
     case TOGGLE_ACTION:
-      // restart timer when user hits "play" when timer has finished
-      if (state.time === 0 && !state.isPlaying) {
+      const userHitsPlayAndTimerIsFinished = state.time === 0 && !state.isPlaying;
+      if (userHitsPlayAndTimerIsFinished) {
         const { workInterval, breakInterval } = initialState;
         const newTime = state.mode === "work" ? workInterval : breakInterval;
 
@@ -39,9 +39,12 @@ const reducerFunction = (state = initialState, action) => {
         isPlaying: !state.isPlaying
       };
     case RESET_ACTION:
+      const { mode, workInterval, breakInterval } = state;
+      const newTime = mode === "work" ? workInterval : breakInterval;
+
       return {
         ...state,
-        time: initialState.time,
+        time: newTime,
         isPlaying: false
       };
     case SET_TIME_ACTION:

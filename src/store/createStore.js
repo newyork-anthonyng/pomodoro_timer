@@ -1,20 +1,13 @@
 const createStore = (reducer, middleware) => {
   const store = {};
   store.state = undefined;
-  store.listeners = [];
 
   store.getState = () => {
     return store.state || {};
   };
 
-  store.subscribe = (listener) => {
-    store.listeners.push(listener);
-  };
-
   store.dispatch = (action) => {
     store.state = reducer(store.state, action);
-
-    store.listeners.forEach(listener => listener());
   };
 
   // https://redux.js.org/advanced/middleware
