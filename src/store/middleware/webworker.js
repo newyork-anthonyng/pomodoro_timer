@@ -1,26 +1,10 @@
-import Worker from "worker-loader!../../worker";
-import store from "../index";
+import timerWorker from "../../worker/index";
 import {
   RESET_ACTION,
   TOGGLE_ACTION,
   SET_WORK_INTERVAL_ACTION,
-  dispatchSetTimeAction,
-  dispatchPauseAction,
   SET_BREAK_INTERVAL_ACTION
 } from "../actions";
-
-// Time is more accurate with webworker
-const timerWorker = new Worker();
-timerWorker.onmessage = e => {
-  switch(e.data.action) {
-    case "TICK":
-      return store.dispatch(dispatchSetTimeAction(e.data.time));
-    case "COMPLETE":
-      return store.dispatch(dispatchPauseAction());
-    default:
-      break;
-  }
-};
 
 const webWorkerMiddleware = store => next => action => {
   const previousPlayState = store.getState().isPlaying;
