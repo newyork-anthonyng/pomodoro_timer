@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`notificationMiddleware should create notification if timer stopped and time is expired 1`] = `
+Array [
+  "Pomodoro Timer expired",
+  Object {
+    "body": "",
+    "requireInteraction": true,
+  },
+]
+`;
