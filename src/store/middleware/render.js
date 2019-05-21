@@ -6,7 +6,6 @@ import {
 
 const timeElement = document.querySelector(".js-timer");
 const playButtonElement = document.querySelector(".js-play-button");
-const resetButtonElement = document.querySelector(".js-reset-button");
 
 const rerenderPlayButton = renderPlayButton(playButtonElement);
 const rerenderTimeElement = renderTimeElement(timeElement);
