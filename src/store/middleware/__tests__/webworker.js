@@ -3,7 +3,8 @@ import {
   RESET_ACTION,
   TOGGLE_ACTION,
   SET_WORK_INTERVAL_ACTION,
-  SET_BREAK_INTERVAL_ACTION
+  SET_BREAK_INTERVAL_ACTION,
+  TOGGLE_WORK_BREAK_INTERVAL_ACTION
 } from "../../actions";
 
 var mockTimerWorker;
@@ -45,6 +46,7 @@ describe("webworkerMiddleware", () => {
     });
 
     it("should not post message if play state did not change", () => {
+        next = () => {};
         webworkerMiddleware(store)(next)(action);
 
         expect(mockTimerWorker.postMessage).not.toHaveBeenCalled();
@@ -124,6 +126,24 @@ describe("webworkerMiddleware", () => {
         it("should post START and STOP messages", () => {
             action = {
                 type: SET_BREAK_INTERVAL_ACTION
+            };
+            webworkerMiddleware(store)(next)(action);
+
+            expect(mockTimerWorker.postMessage).toHaveBeenCalledTimes(2);
+            expect(mockTimerWorker.postMessage.mock.calls[0][0]).toEqual({
+                action: "START",
+                time: 42
+            });
+            expect(mockTimerWorker.postMessage.mock.calls[1][0]).toEqual({
+                action: "STOP"
+            });
+        });
+    });
+
+    describe("TOGGLE_WORK_BREAK_INTERVAL_ACTION", () => {
+        it("should post START and STOP messages", () => {
+            action = {
+                type: TOGGLE_WORK_BREAK_INTERVAL_ACTION
             };
             webworkerMiddleware(store)(next)(action);
 

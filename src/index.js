@@ -3,8 +3,10 @@ import {
   dispatchResetAction,
   dispatchTogglePlayAction,
   dispatchSetWorkIntervalAction,
-  dispatchSetBreakIntervalAction
+  dispatchSetBreakIntervalAction,
+  dispatchToggleWorkBreakIntervalAction
 } from "./store/actions";
+import SHORTCUT from "./shortcut";
 
 const $playButton = document.querySelector(".js-play-button");
 const $resetButton = document.querySelector(".js-reset-button");
@@ -27,6 +29,19 @@ function setupEventListeners() {
   $breakIntervalButton.addEventListener("click", function handleBreakIntervalButtonClick() {
     store.dispatch(dispatchSetBreakIntervalAction());
   })
+
+  document.addEventListener("keydown", function(e) {
+    if (SHORTCUT.isPlayPause(e)) {
+      e.preventDefault();
+      store.dispatch(dispatchTogglePlayAction());
+    } else if (SHORTCUT.isReset(e)) {
+      e.preventDefault();
+      store.dispatch(dispatchResetAction());
+    } else if (SHORTCUT.isToggleInterval(e)) {
+      e.preventDefault();
+      store.dispatch(dispatchToggleWorkBreakIntervalAction());
+    }
+  });
 }
 
 setupEventListeners();

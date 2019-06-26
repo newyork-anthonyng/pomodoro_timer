@@ -36,3 +36,9 @@ Object {
   "type": "toggle_action",
 }
 `;
+
+exports[`dispatchToggleWorkBreakIntervalAction 1`] = `
+Object {
+  "type": "toggle_work_break_interval_action",
+}
+`;

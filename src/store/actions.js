@@ -4,6 +4,7 @@ export const RESET_ACTION = "reset_action";
 export const SET_TIME_ACTION = "set_time_action";
 export const SET_WORK_INTERVAL_ACTION = "set_work_interval_action";
 export const SET_BREAK_INTERVAL_ACTION = "set_break_interval_action";
+export const TOGGLE_WORK_BREAK_INTERVAL_ACTION = "toggle_work_break_interval_action";
 
 export const dispatchTogglePlayAction = () => ({ type: TOGGLE_ACTION });
 export const dispatchPauseAction = () => ({ type: PAUSE_ACTION });
@@ -14,3 +15,4 @@ export const dispatchSetTimeAction = (time) => ({
 });
 export const dispatchSetWorkIntervalAction = () => ({ type: SET_WORK_INTERVAL_ACTION });
 export const dispatchSetBreakIntervalAction = () => ({ type: SET_BREAK_INTERVAL_ACTION });
+export const dispatchToggleWorkBreakIntervalAction = () => ({ type: TOGGLE_WORK_BREAK_INTERVAL_ACTION });

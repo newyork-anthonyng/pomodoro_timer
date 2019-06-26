@@ -4,7 +4,8 @@ import {
     dispatchResetAction,
     dispatchSetTimeAction,
     dispatchSetWorkIntervalAction,
-    dispatchSetBreakIntervalAction
+    dispatchSetBreakIntervalAction,
+    dispatchToggleWorkBreakIntervalAction
 } from "../actions";
 
 it("dispatchTogglePlayAction", () => {
@@ -29,4 +30,8 @@ it("dispatchSetWorkIntervalAction", () => {
 
 it("dispatchSetBreakIntervalAction", () => {
     expect(dispatchSetBreakIntervalAction()).toMatchSnapshot();
+});
+
+it("dispatchToggleWorkBreakIntervalAction", () => {
+    expect(dispatchToggleWorkBreakIntervalAction()).toMatchSnapshot();
 });
