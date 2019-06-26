@@ -5,7 +5,8 @@ import {
   RESET_ACTION,
   SET_TIME_ACTION,
   SET_WORK_INTERVAL_ACTION,
-  SET_BREAK_INTERVAL_ACTION
+  SET_BREAK_INTERVAL_ACTION,
+  TOGGLE_WORK_BREAK_INTERVAL_ACTION
 } from "../actions";
 
 it("should return initial state by default", () => {
@@ -91,7 +92,7 @@ describe("SET_WORK_INTERVAL_ACTION", () => {
     state.isPlaying = true;
     state.time = 42;
 
-    expect(reducer(initialState, { type: SET_WORK_INTERVAL_ACTION })).toMatchSnapshot();
+    expect(reducer(state, { type: SET_WORK_INTERVAL_ACTION })).toMatchSnapshot();
   });
 });
 
@@ -102,6 +103,26 @@ describe("SET_BREAK_INTERVAL_ACTION", () => {
     state.isPlaying = true;
     state.time = 42;
 
-    expect(reducer(initialState, { type: SET_BREAK_INTERVAL_ACTION })).toMatchSnapshot();
+    expect(reducer(state, { type: SET_BREAK_INTERVAL_ACTION })).toMatchSnapshot();
+  });
+});
+
+describe("TOGGLE_WORK_BREAK_INTERVAL_ACTION", () => {
+  let state;
+
+  beforeEach(() => {
+    state = Object.assign({}, initialState);
+  });
+
+  it("should return correct state in 'work' mode", () => {
+    state.mode = "work";
+
+    expect(reducer(state, { type: TOGGLE_WORK_BREAK_INTERVAL_ACTION })).toMatchSnapshot();
+  });
+
+  it("should return correct state in 'break' mode", () => {
+    state.mode = "break";
+
+    expect(reducer(state, { type: TOGGLE_WORK_BREAK_INTERVAL_ACTION })).toMatchSnapshot();
   });
 });

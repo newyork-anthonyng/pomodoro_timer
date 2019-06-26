@@ -100,6 +100,26 @@ Object {
 }
 `;
 
+exports[`TOGGLE_WORK_BREAK_INTERVAL_ACTION should return correct state in 'break' mode 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "work",
+  "time": 1500,
+  "workInterval": 1500,
+}
+`;
+
+exports[`TOGGLE_WORK_BREAK_INTERVAL_ACTION should return correct state in 'work' mode 1`] = `
+Object {
+  "breakInterval": 300,
+  "isPlaying": false,
+  "mode": "break",
+  "time": 300,
+  "workInterval": 1500,
+}
+`;
+
 exports[`should return initial state by default 1`] = `
 Object {
   "breakInterval": 300,

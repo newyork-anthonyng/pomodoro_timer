@@ -3,7 +3,8 @@ import {
   RESET_ACTION,
   TOGGLE_ACTION,
   SET_WORK_INTERVAL_ACTION,
-  SET_BREAK_INTERVAL_ACTION
+  SET_BREAK_INTERVAL_ACTION,
+  TOGGLE_WORK_BREAK_INTERVAL_ACTION
 } from "../actions";
 
 const webWorkerMiddleware = store => next => action => {
@@ -27,6 +28,7 @@ const webWorkerMiddleware = store => next => action => {
       });
     case SET_WORK_INTERVAL_ACTION:
     case SET_BREAK_INTERVAL_ACTION:
+    case TOGGLE_WORK_BREAK_INTERVAL_ACTION:
       timerWorker.postMessage({
         action: "START",
         time: store.getState().time
